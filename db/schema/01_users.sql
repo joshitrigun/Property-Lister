@@ -4,63 +4,33 @@ DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS properties CASCADE;
 DROP TABLE IF EXISTS favorites CASCADE;
 DROP TABLE IF EXISTS messages CASCADE;
+
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
   name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   phone VARCHAR(255) NOT NULL,
-<<<<<<< HEAD
-  user_types VARCHAR(255) NOT NULL,
-);
-
-=======
   is_admin BOOLEAN,
 );
 
 
->>>>>>> 8499477a5036a07f320a351bfd481575cc6a4b27
+
 CREATE TABLE properties(
   id SERIAL PRIMARY KEY NOT NULL,
   owner_id INTEGER FOREIGN KEY REFERENCES users(id),
   name VARCHAR(255) NOT NULL,
   title VARCHAR(255) NOT NULL,
   description VARCHAR(255) NOT NULL,
-<<<<<<< HEAD
-  cost VARCHAR(255) NOT NULL,
-  image_url VARCHAR(255) NOT NULL,
-  number_of_bedrooms VARCHAR(255) NOT NULL,
-  number_of_bathrooms VARCHAR(255) NOT NULL,
-=======
   cost INTEGER,
   image_url VARCHAR(255) NOT NULL,
   number_of_bedrooms INTEGER,
   number_of_bathrooms INTEGER,
->>>>>>> 8499477a5036a07f320a351bfd481575cc6a4b27
   country VARCHAR(255) NOT NULL,
   province VARCHAR(255) NOT NULL,
   city VARCHAR(255) NOT NULL,
   postal_code VARCHAR(255) NOT NULL,
   street VARCHAR(255) NOT NULL,
-<<<<<<< HEAD
-  isActive VARCHAR(255) NOT NULL,
-);
-
-CREATE TABLE messages (
-id SERIAL PRIMARY KEY NOT NULL,
-);
-CREATE TABLE favorites (
-id SERIAL PRIMARY KEY NOT NULL,
-);
-
-
-
-INSERT INTO movie_villains (villain, movie)
-VALUES ('Agent Smith', 'The Matrix'),
-  ('Voldemort', 'Harry Potter Series'),
-  ('Wicked Witch of the West', 'Wizard of Oz'),
-  ('Thanos', 'Avengers');
-=======
   isActive BOOLEAN,
 );
 
@@ -70,6 +40,7 @@ id SERIAL PRIMARY KEY NOT NULL,
 user_id INTEGER FOREIGN KEY REFERENCES users(id),
 property_id INTEGER FOREIGN KEY REFERENCES properties(id)
 );
+
 CREATE TABLE messages (
 id SERIAL PRIMARY KEY NOT NULL,
 sender_id INTEGER FOREIGN KEY REFERENCES favorites(id),

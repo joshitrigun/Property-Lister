@@ -1,11 +1,12 @@
 .wrap {
   overflow: hidden;
   position: relative;
+  z-index: 1;
   height: 100%;
 }
 
 .bg {
-  opacity: 0.8;
+  opacity: 0.5;
   position: absolute;
   left: 0;
   top: 0;
@@ -13,20 +14,24 @@
   height: 100%;
 }
 
-.container {
+.index-container {
   position: fixed;
+  z-index: 2000;
   text-align: center;
-  top: 400px;
-  color: #fff;
+  top: 40%;
+  width: 100%;
 }
 
-// h3 {
-//   align-items: center;
-//   justify-content: center;
-// }
+.index-container h3 {
+  font-size: 45px;
+  font-weight: bold;
+}
 
-// button {
-//   background-color: red;
-//   color: white;
-//   border-radius: 15px x;
-// }
+.index-container button {
+  border-radius: 15px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #000;
+  color: #fff;
+}

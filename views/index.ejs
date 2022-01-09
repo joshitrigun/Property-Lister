@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
     <!-- Header styles -->
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+    <!-- Index styles -->
+    <link rel="stylesheet" href="/styles/index.css" type="text/css" />
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -22,6 +24,24 @@
   </head>
 
   <body>
-    <header><%-include('partials/_header') %></header>
+    <div class="wrap">
+      <img
+        class="bg"
+        src="https://images.unsplash.com/photo-1549517045-bc93de075e53?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
+        alt=""
+      />
+    </div>
+    <header id="header"><%-include('partials/_header') %></header>
+    <main class="container">
+      <h3>Find your dream property!</h3>
+      <button>View All Properties</button>
+    </main>
+
+    <!-- Bootstrap Script -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

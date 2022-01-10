@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
     <!-- Header styles -->
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
-    <!-- Index styles -->
-    <link rel="stylesheet" href="/styles/index.css" type="text/css" />
+    <!-- Page styles -->
+    <link rel="stylesheet" href="/styles/properties.css" type="text/css" />
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -24,17 +24,15 @@
   </head>
 
   <body>
-    <div class="wrap">
-      <img
-        class="bg"
-        src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80"
-        alt=""
-      />
-    </div>
     <header id="header"><%-include('partials/_header') %></header>
-    <main class="index-container">
-      <h3>Find your dream property!</h3>
-      <a href="/properties"><button>View All Properties</button></a>
+    <main id="main">
+      <h3>Properties Page</h3>
+      <div>
+        <% for(const property in properties) { %>
+        <p><%= properties[property].image_url %></p>
+        <img src="<%= properties[property].image_url %>" />
+        <% } %>
+      </div>
     </main>
 
     <!-- Bootstrap Script -->

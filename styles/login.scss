@@ -1,0 +1,55 @@
+body{
+  background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1073&q=80');
+  background-size: cover;
+}
+
+
+#login-title {
+  display:flex;
+  justify-content: center;
+  color: white;
+  font-size: 75px;
+
+}
+
+.email-label {
+  color:white;
+  display: flex;
+  justify-content: center;
+}
+
+.login-button {
+  display:flex;
+  justify-content: center;
+  background-color: #F0A833;
+  color:white;
+  radius:15px;
+  margin-left:800px;
+  margin-right: 800px;
+  border: 2px solid black;
+  padding: 10px 10px;
+  font-size: 20px;
+  border-radius: 100;
+
+}
+
+.main-login {
+  margin-top:320px;
+}
+
+#login-title {
+  display: flex;
+  justify-content: center;
+}
+
+#email-stuff {
+  display: flex;
+  justify-content: center;
+}
+
+#password-stuff {
+  display:flex;
+  justify-content:center;
+  color:white;
+}
+

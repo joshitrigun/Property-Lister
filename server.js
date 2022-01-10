@@ -56,18 +56,9 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-// Login
-// app.get("/login/:id", (req, res) => {
-//   // cookie-session middleware
-//   console.log(res);
-//   req.session.user_id = req.params.id;
-
-//   // cookie-parser middleware
-//   res.cookie("user_id", req.params.id);
-
-//   // send the user somewhere
-//   res.redirect("/properties");
-// });
+app.get("/login", (req, res) => {
+  res.render("login");
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

@@ -78,4 +78,19 @@ const getProperty = (db) => {
   return router;
 };
 
-module.exports = { getProperties, addProperties, getProperty };
+const removeProperty = (db) => {
+  router.get("/:id", (req, res) => {
+    db.query(`SELECT * FROM properties where id = $1;`, [req.params.id])
+      .then((data) => {
+        console.log("check", data.rows);
+        const templateVars = { property: data.rows[0] };
+        res.render("property", templateVars);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+  return router;
+};
+
+module.exports = { getProperties, addProperties, getProperty, removeProperty };

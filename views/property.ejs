@@ -28,9 +28,15 @@
 
 
   <main id="main">
+    <div id="body-page"></div>
       <h1 id ="property-title">Property </h3>
-      <h2 id ="price">$<%= property.cost %></h3>
+      <div id = "image-id">
+
+      </div>
+    <div id= "property-info"
+      <h2 id ="price">$<%= property.cost %></h2>
       <div id= "address" >
+        <p>Address</p>
         <p><%= property.street %></p>
         <p><%= property.city %></p>
         <p><%= property.postal_code %></p>
@@ -39,10 +45,13 @@
 
         <h2 id="features-title"> Property Features </h2>
         <div id ="features">
-        <p><%property.number_of_bathrooms %></p>
+        <p>Number of Bathrooms :<%= property.number_of_bathrooms %></p>
+        <p>Number of Bedrooms  :<%= property.number_of_bedrooms %></p>
+      </div>
+    </div>
+  </div>
 
-      </div>
-      </div>
+
 
 
     </main>

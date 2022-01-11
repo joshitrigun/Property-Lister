@@ -7,17 +7,20 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const propertiesRoutes = require("./routes/properties");
+const { getProperties, addProperties, getProperty} = require("./routes/properties");
 const loginRoutes = require("./routes/login");
-const { getProperty } = require("./routes/properties_id");
-// const cookieSession = require("cookie-session");
-// const cookieParser = require("cookie-parser");
 
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
-db.connect();
+db.connect()
+  .then(() => {
+    console.log("Connection passed");
+  })
+  .catch((err) => {
+    console.log("I am error", err);
+  });
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -47,9 +50,25 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 // app.use("/api/users", usersRoutes(db));
 // app.use("/api/widgets", widgetsRoutes(db));
-app.use("/properties", propertiesRoutes(db));
-app.use("/login", loginRoutes(db));
+
 app.use("/properties/:id", getProperty(db));
+app.use("/properties", getProperties(db));
+app.use("/login", loginRoutes(db));
+
+/*
+app.get("/properties/:id", (req,res) => {
+  console.log('inside route',req.params)
+  db.query(`SELECT * FROM properties where id = ${req.params.id}`)
+    .then((data) => {
+      console.log('check', data.rows);
+      const templateVars = { property: data.rows[0] };
+      res.render("properties_id", templateVars);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    })
+})
+*/
 // Note: mount other resources here, using the same pattern above
 
 // Home page

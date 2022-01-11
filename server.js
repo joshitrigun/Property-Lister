@@ -7,7 +7,11 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const { getProperties, addProperties } = require("./routes/properties");
+const {
+  getProperties,
+  addProperties,
+  getProperty,
+} = require("./routes/properties");
 const loginRoutes = require("./routes/login");
 
 // const cookieSession = require("cookie-session");
@@ -54,6 +58,7 @@ app.use(express.static("public"));
 // app.use("/api/users", usersRoutes(db));
 // app.use("/api/widgets", widgetsRoutes(db));
 app.use("/properties", getProperties(db));
+app.use("/properties/:id", getProperty(db));
 app.use("/login", loginRoutes(db));
 // Note: mount other resources here, using the same pattern above
 

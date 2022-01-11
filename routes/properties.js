@@ -79,4 +79,4 @@ const getProperty = (db) => {
   return router;
 };
 
-module.exports = { getProperties, addProperties, getPR };
+module.exports = { getProperties, addProperties, getProperty };

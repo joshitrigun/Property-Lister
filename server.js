@@ -53,6 +53,7 @@ app.use(express.static("public"));
 
 app.use("/properties/:id", getProperty(db));
 app.use("/properties", getProperties(db));
+app.use("/properties/:id", getProperty(db));
 app.use("/login", loginRoutes(db));
 
 /*

@@ -24,9 +24,9 @@
 <div class="main-login"
   <center></center>
     <main style="margin: 1em">
-      <h3 id="login-title"> Login into E-Commerce</h3>
+      <h3 id="login-title"> Login into Property Lister</h3>
 
-        <form class="form-incline" action="/login" method="POST">
+        <form class="form-incline" action="/properties" method="GET">
           <div id="email-stuff"
           <label class="email-label" for="email"> Enter your email address here:</label>
           <input type="email" name="email" placeholder="@useremail.com:">
@@ -38,7 +38,7 @@
       </div>
           <br />
       <div id= "button-stuff"
-          <button type="submit" class="login-button">LOGIN</button>
+      <a href="/properties"><button type="submit" class="login-button">LOGIN</button></a>
     </div>
         </form>
           <div/>

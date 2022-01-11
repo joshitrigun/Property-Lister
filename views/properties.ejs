@@ -28,7 +28,7 @@
     <main id="main">
       <div class="d-flex flex-column justify-content-center align-items-center flex-wrap">
         <% for(const property in properties) { %>
-        <div class="card mb-3">
+        <div id="<%= properties[property].id%>" class="card mb-3">
           <div class="row g-0">
             <div class="col-md-4">
               <img
@@ -53,6 +53,8 @@
       </div>
     </main>
 
+    <!-- Scripts -->
+    <script src="../public/app.js"></script>
     <!-- Bootstrap Script -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

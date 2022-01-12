@@ -53,6 +53,9 @@
               </p>
               <div class="card-text d-flex justify-content-between">
                 <p class="cost">$<%= properties[property].cost %></p>
+                <% if (properties[property].isfeatured) { %>
+                  <i class="fas fa-star justify-content-end"></i>
+                  <% } %>
                 <i class="fab fa-gratipay"></i>
               </div>
             </div>

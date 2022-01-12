@@ -31,23 +31,13 @@
     <header id="header"><%-include('partials/_header') %></header>
     <form id="add-new-property" action="/properties" method="post">
       <div class="form-group">
-        <label for="ownerId">Owner ID</label>
-        <input
-          type="text"
-          class="form-control"
-          id="ownerId"
-          name="ownerId"
-          placeholder="Enter owner id"
-        />
-      </div>
-      <div class="form-group">
         <label for="name">Name</label>
         <input
           type="text"
           class="form-control"
           id="name"
           name="name"
-          placeholder="Enter email"
+          placeholder="Enter name"
         />
       </div>
       <div class="form-group">
@@ -67,7 +57,7 @@
           class="form-control"
           id="description"
           name="description"
-          placeholder="title"
+          placeholder="description"
         />
       </div>
       <div class="form-group">

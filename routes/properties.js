@@ -105,5 +105,4 @@ module.exports = {
   addProperties,
   getProperty,
   removeProperty,
-  filterProperties,
 };

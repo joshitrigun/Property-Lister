@@ -55,9 +55,8 @@ app.use(express.static("public"));
 // app.use("/api/users", usersRoutes(db));
 // app.use("/api/widgets", widgetsRoutes(db));
 
-app.use("/properties/:id", getProperty(db));
 app.use("/properties", getProperties(db));
-app.use("/properties/:id", getProperty(db));
+app.use("/properties", getProperty(db));
 app.use("/login", loginRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
@@ -71,5 +70,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`BuySell app listening on port ${PORT}`);
 });

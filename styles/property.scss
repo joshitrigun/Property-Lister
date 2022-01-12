@@ -1,5 +1,5 @@
 body {
-  background-image:url('https://images.unsplash.com/photo-1495195129352-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80');
+  background-image: url("https://images.unsplash.com/photo-1495195129352-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80");
   background-size: cover;
 }
 
@@ -11,11 +11,10 @@ body {
   display: flex;
   justify-content: space-between;
   flex-direction: row-reverse;
-
 }
 
 #price {
-  color:forestgreen;
+  color: forestgreen;
 }
 
 img {
@@ -23,7 +22,7 @@ img {
   width: 50%;
   margin-left: 400px;
   margin-top: 30px;
-  border:20px solid black;
+  border: 20px solid black;
   position: relative;
 }
 img:hover {
@@ -32,12 +31,12 @@ img:hover {
 
 #info-id {
   margin-left: 120px;
-  margin-top:100px;
-  width:20%;
+  margin-top: 100px;
+  width: 20%;
 }
 
 #property-title {
-  margin:20px;
+  margin: 20px;
 }
 
 #address {
@@ -54,7 +53,6 @@ img:hover {
 #features-title {
   font-size: 30px;
   font-weight: 600;
-
 }
 
 #features {

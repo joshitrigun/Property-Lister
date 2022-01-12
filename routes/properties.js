@@ -5,9 +5,9 @@ const getProperties = (db) => {
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM properties;`)
       .then((data) => {
-        console.log(data.rows);
+        //console.log(data.rows);
         const templateVars = { properties: data.rows };
-        console.log(templateVars);
+        //console.log(templateVars);
         res.render("properties", templateVars);
       })
       .catch((err) => {
@@ -64,7 +64,7 @@ const addProperties = (db) => {
 };
 
 const getProperty = (db) => {
-  router.get("/", (req, res) => {
+  router.get("/:id", (req, res) => {
     console.log("inside route", req.params);
     db.query(`SELECT * FROM properties where id = $1;`, [req.params.id])
       .then((data) => {

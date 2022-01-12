@@ -65,6 +65,7 @@ const addProperties = (db) => {
 
 const getProperty = (db) => {
   router.get("/:id", (req, res) => {
+    console.log("inside route", req.params);
     db.query(`SELECT * FROM properties where id = $1;`, [req.params.id])
       .then((data) => {
         console.log("check", data.rows);

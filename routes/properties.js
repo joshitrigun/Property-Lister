@@ -3,11 +3,17 @@ const router = express.Router();
 
 const getProperties = (db) => {
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM properties;`)
+    let queryString = `SELECT * FROM properties`;
+    let tokenPrice;
+    if (req.query) {
+      if (req.query.price) {
+        tokenPrice = Number(req.query.price);
+        queryString += ` WHERE cost >= $1 `;
+      }
+    }
+    db.query(queryString, tokenPrice ? [tokenPrice] : [])
       .then((data) => {
-        //console.log(data.rows);
         const templateVars = { properties: data.rows };
-        //console.log(templateVars);
         res.render("properties", templateVars);
       })
       .catch((err) => {
@@ -65,7 +71,7 @@ const addProperties = (db) => {
 
 const getProperty = (db) => {
   router.get("/:id", (req, res) => {
-    console.log("inside route", req.params);
+    console.log("inside route", req);
     db.query(`SELECT * FROM properties where id = $1;`, [req.params.id])
       .then((data) => {
         console.log("check", data.rows);
@@ -94,4 +100,10 @@ const removeProperty = (db) => {
   return router;
 };
 
-module.exports = { getProperties, addProperties, getProperty, removeProperty };
+module.exports = {
+  getProperties,
+  addProperties,
+  getProperty,
+  removeProperty,
+  filterProperties,
+};

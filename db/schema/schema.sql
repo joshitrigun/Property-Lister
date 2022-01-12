@@ -31,7 +31,8 @@ CREATE TABLE properties(
   city VARCHAR(255) NOT NULL,
   postal_code VARCHAR(255) NOT NULL,
   street VARCHAR(255) NOT NULL,
-  isActive BOOLEAN
+  isActive BOOLEAN,
+  isFeatured BOOLEAN
 );
 
 

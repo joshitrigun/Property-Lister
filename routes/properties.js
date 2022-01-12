@@ -13,7 +13,6 @@ module.exports = (db) => {
     }
     db.query(queryString, tokenPrice ? [tokenPrice] : [])
       .then((data) => {
-        console.log(data.rows);
         const templateVars = { properties: data.rows };
         res.render("properties", templateVars);
       })

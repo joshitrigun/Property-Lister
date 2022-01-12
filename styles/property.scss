@@ -1,0 +1,60 @@
+body {
+  background-image: url("https://images.unsplash.com/photo-1495195129352-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80");
+  background-size: cover;
+}
+
+#main {
+  margin-top: 80px;
+}
+
+#body-id {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+}
+
+#price {
+  color: forestgreen;
+}
+
+img {
+  height: 50%;
+  width: 50%;
+  margin-left: 400px;
+  margin-top: 30px;
+  border: 20px solid black;
+  position: relative;
+}
+img:hover {
+  box-shadow: 10px 10px 10px #545149;
+}
+
+#info-id {
+  margin-left: 120px;
+  margin-top: 100px;
+  width: 20%;
+}
+
+#property-title {
+  margin: 20px;
+}
+
+#address {
+  font-size: 20 px;
+  margin: 5px;
+  font-weight: 600;
+}
+
+#description {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+#features-title {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+#features {
+  font-weight: 600;
+}

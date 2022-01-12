@@ -10,7 +10,7 @@
     <!-- Header styles -->
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
     <!-- Page styles -->
-    <link rel="stylesheet" href="/styles/properties_id.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/property.scss" type="text/css" />
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -24,28 +24,38 @@
   </head>
 
   <body>
+
     <header id="header"><%-include('partials/_header') %></header>
 
-
   <main id="main">
-      <h1 id ="property-title">Property </h3>
-      <h2 id ="price">$<%= property.cost %></h3>
-      <div id= "address" >
-        <p><%= property.street %></p>
-        <p><%= property.city %></p>
-        <p><%= property.postal_code %></p>
+    <h1 id ="property-title">Property <%= property.name %></h1>
+      <div id= "body-id">
+          <div>
+              <img
+                src="<%= property.image_url %>"
+                class="img-fluid rounded-start"
+                alt="...">
+          </div>
+
+          <div id= "info-id">
+            <h2 id ="price">Price:  $<%= property.cost %></h3>
+
+            <h2 id= "description"><%= property.description %> </h2>
+            <div id= "address" >
+              <p>Street: <%= property.street %></p>
+              <p>City: <%= property.city %></p>
+              <p>Postal Code: <%= property.postal_code %></p>
+            </div>
+
+            <h2 id="features-title"> Property Features </h2>
+            <div id ="features">
+              <p>Bathrooms: <%= property.number_of_bathrooms %></p>
+              <p>Bedrooms: <%= property.number_of_bedrooms %></p>
+
+            </div>
+          </div>
       </div>
-      <h2 id= "description"><%= property.description %> </h2>
-
-        <h2 id="features-title"> Property Features </h2>
-        <div id ="features">
-        <p><%property.number_of_bathrooms %></p>
-
-      </div>
-      </div>
-
-
-    </main>
+  </main>
 
     <!-- Bootstrap Script -->
     <script

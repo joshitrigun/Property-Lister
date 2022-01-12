@@ -5,9 +5,9 @@ const getProperties = (db) => {
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM properties;`)
       .then((data) => {
-        console.log(data.rows);
+        //console.log(data.rows);
         const templateVars = { properties: data.rows };
-        console.log(templateVars);
+        //console.log(templateVars);
         res.render("properties", templateVars);
       })
       .catch((err) => {

@@ -7,11 +7,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const {
-  getProperties,
-  addProperties,
-  getProperty,
-} = require("./routes/properties");
+const propertyRoutes = require("./routes/properties");
 const loginRoutes = require("./routes/login");
 
 // PG database client/connection setup
@@ -55,8 +51,8 @@ app.use(express.static("public"));
 // app.use("/api/users", usersRoutes(db));
 // app.use("/api/widgets", widgetsRoutes(db));
 
-app.use("/properties", getProperties(db));
-app.use("/properties", getProperty(db));
+app.use("/properties", propertyRoutes(db));
+//app.use("/properties", getProperty(db));
 app.use("/login", loginRoutes(db));
 
 // Note: mount other resources here, using the same pattern above

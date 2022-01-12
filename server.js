@@ -14,9 +14,6 @@ const {
 } = require("./routes/properties");
 const loginRoutes = require("./routes/login");
 
-// const cookieSession = require("cookie-session");
-// const cookieParser = require("cookie-parser");
-
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
@@ -57,9 +54,11 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 // app.use("/api/users", usersRoutes(db));
 // app.use("/api/widgets", widgetsRoutes(db));
+
 app.use("/properties", getProperties(db));
-app.use("/properties/:id", getProperty(db));
+app.use("/properties", getProperty(db));
 app.use("/login", loginRoutes(db));
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page

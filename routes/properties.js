@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const getProperties = (db) => {
+module.exports = (db) => {
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM properties;`)
       .then((data) => {
@@ -14,14 +14,26 @@ const getProperties = (db) => {
         res.status(500).json({ error: err.message });
       });
   });
-  return router;
-};
+  router.get("/new", (req, res) => {
+    res.render("addNewProperty");
+  });
 
-const addProperties = (db) => {
-  router
-    .post("/", (req, res) => {
-      db.query(
-        `INSERT INTO properties (
+  router.get("/:id", (req, res) => {
+    // console.log("inside route", req.params);
+    db.query(`SELECT * FROM properties where id = $1;`, [req.params.id])
+      .then((data) => {
+        // console.log("check", data.rows);
+        const templateVars = { property: data.rows[0] };
+        res.render("property", templateVars);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
+  router.post("/", (req, res) => {
+    db.query(
+      `INSERT INTO properties (
           owner_id,
           name,
           title,
@@ -40,58 +52,31 @@ const addProperties = (db) => {
             $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
           RETURNING *;
 `,
-        [
-          properties.owner_id,
-          properties.name,
-          properties.title,
-          properties.description,
-          properties.cost,
-          properties.image_url,
-          properties.number_of_bedrooms,
-          properties.number_of_bathrooms,
-          properties.country,
-          properties.province,
-          properties.city,
-          properties.postal_code,
-          properties.street,
-          properties.isActive,
-        ]
-      );
-    })
-    .then((res) => {
-      return res.rows[0];
-    });
-};
-
-const getProperty = (db) => {
-  router.get("/:id", (req, res) => {
-    console.log("inside route", req.params);
-    db.query(`SELECT * FROM properties where id = $1;`, [req.params.id])
-      .then((data) => {
-        console.log("check", data.rows);
-        const templateVars = { property: data.rows[0] };
-        res.render("property", templateVars);
+      [
+        1,
+        req.body.name,
+        req.body.title,
+        req.body.description,
+        Number(req.body.cost),
+        req.body.imageUrl,
+        Number(req.body.bedrooms),
+        Number(req.body.bathrooms),
+        req.body.country,
+        req.body.province,
+        req.body.city,
+        req.body.postalCode,
+        req.body.street,
+        req.body.isActive,
+      ]
+    )
+      .then((res) => {
+        console.log(res.rows);
+        res.send(res.rows[0]);
       })
       .catch((err) => {
-        res.status(500).json({ error: err.message });
+        console.log(err);
       });
   });
+
   return router;
 };
-
-const removeProperty = (db) => {
-  router.get("/:id", (req, res) => {
-    db.query(`SELECT * FROM properties where id = $1;`, [req.params.id])
-      .then((data) => {
-        console.log("check", data.rows);
-        const templateVars = { property: data.rows[0] };
-        res.render("property", templateVars);
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
-  });
-  return router;
-};
-
-module.exports = { getProperties, addProperties, getProperty, removeProperty };

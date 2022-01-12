@@ -3,6 +3,7 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
+    let user = req.cookies.userCookie;
     let queryString = `SELECT * FROM properties`;
     let tokenPrice;
     if (req.query) {
@@ -13,23 +14,26 @@ module.exports = (db) => {
     }
     db.query(queryString, tokenPrice ? [tokenPrice] : [])
       .then((data) => {
-        const templateVars = { properties: data.rows };
+        const templateVars = { user: user, properties: data.rows };
         res.render("properties", templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
   });
+
   router.get("/new", (req, res) => {
-    res.render("addNewProperty");
+    let user = req.cookies.userCookie;
+    const templateVars = { user: user };
+    res.render("addNewProperty", templateVars);
   });
 
   router.get("/:id", (req, res) => {
-    // console.log("inside route", req.params);
+    let user = req.cookies.userCookie;
     db.query(`SELECT * FROM properties where id = $1;`, [req.params.id])
       .then((data) => {
         // console.log("check", data.rows);
-        const templateVars = { property: data.rows[0] };
+        const templateVars = { user: user, property: data.rows[0] };
         res.render("property", templateVars);
       })
       .catch((err) => {

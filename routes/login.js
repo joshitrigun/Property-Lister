@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
-
   router.get("/", (req, res) => {
-    console.log('trylogin')
-    res.render("login");
+    let user = req.cookies.userCookie;
+    const templateVars = { user: user };
+    res.render("login", templateVars);
   });
-/*
+  /*
   router.post("/login", (req, res) => {
     console.log('trylogin')
     var randomNumber=Math.random().toString();
@@ -19,4 +19,3 @@ module.exports = (db) => {
 */
   return router;
 };
-

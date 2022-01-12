@@ -1,9 +1,22 @@
 #main {
   margin-top: 71px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+#main .filter {
+  text-align: center;
+  color: black;
+}
+
+#main .col-4 {
+  padding: 10px 10px;
 }
 
 #main .card {
-  max-width: 80%;
+  max-width: 100%;
+  cursor: pointer;
 }
 
 #main .card .card-title {
@@ -12,4 +25,8 @@
 
 #main .card .cost {
   font-style: italic;
+}
+
+#main .fa-gratipay {
+  text-align: right;
 }

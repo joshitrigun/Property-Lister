@@ -41,6 +41,24 @@ module.exports = (db) => {
       });
   });
 
+  router.post("/:property_id", (req, res) => {
+    let user = req.cookies.userCookie;
+    console.log(req);
+    db.query(
+      `INSERT INTO favorites (
+        user_id,
+        property_id) VALUES ($1, $2);`,
+        [user,
+        req.params.property_id])
+        .then((data) => {
+          res.redirect("/favourite")
+        })
+        .catch((err) => {
+          res.status(500).json({error: err.message });
+        });
+   });
+
+
   router.post("/", (req, res) => {
     db.query(
       `INSERT INTO properties (

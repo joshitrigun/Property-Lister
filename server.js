@@ -11,6 +11,8 @@ const app = express();
 const morgan = require("morgan");
 const propertyRoutes = require("./routes/properties");
 const loginRoutes = require("./routes/login");
+const favoriteRoute = require("./routes/favorite")
+
 const cookieParser = require('cookie-parser');
 
 // PG database client/connection setup
@@ -58,6 +60,7 @@ app.use(express.static("public"));
 app.use("/properties", propertyRoutes(db));
 //app.use("/properties", getProperty(db));
 app.use("/login", loginRoutes(db));
+app.use("/favorite", favoriteRoute(db));
 
 // Note: mount other resources here, using the same pattern above
 
@@ -65,10 +68,11 @@ app.use("/login", loginRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.post("/login", (req,res) => {
-  console.log('trylogin')
-  var randomNumber=Math.random().toString();
-  randomNumber=randomNumber.substring(2,randomNumber.length);
-  res.cookie('userCookie',randomNumber, { maxAge: 900000, httpOnly: true });
+
+  //var randomNumber=Math.random().toString();
+  //randomNumber=randomNumber.substring(2,randomNumber.length);
+  res.cookie('userCookie',1, { maxAge: 900000, httpOnly: true });
+
   res.render("index");
 })
 

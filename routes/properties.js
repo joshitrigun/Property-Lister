@@ -6,6 +6,7 @@ module.exports = (db) => {
     db.query(`SELECT * FROM properties;`)
       .then((data) => {
         //console.log(data.rows);
+        console.log(req.cookies)
         const templateVars = { properties: data.rows };
         //console.log(templateVars);
         res.render("properties", templateVars);

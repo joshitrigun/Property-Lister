@@ -23,3 +23,8 @@ INSERT INTO properties
 (9, 'Burnaby Mansion', 'Burnaby Housing', 'Lorem ipsum dolor sit amet', 900000, 'https://mediavault.point2.com/p2h/listing/873f/6e2b/0cab/5af3411a8de4a7fa0426/nwm_full.jpg',8, 6, 'Canada', 'BC', 'Burnaby', 'Y6Y5C6', 'H', 'true');
 
 
+INSERT INTO favorites (user_id, property_id)
+VALUES (1, 1), (1, 2), (2, 3), (3, 4);
+
+INSERT INTO messages (sender_id, receiver_key, property_id, text)
+VALUES (1, 2, 4, 'hi'),(2, 1, 4, 'hello') ;

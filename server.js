@@ -5,14 +5,13 @@ require("dotenv").config();
 const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
+//app.set('views', __dirname + '/views');
 const app = express();
+
 const morgan = require("morgan");
-const {
-  getProperties,
-  addProperties,
-  getProperty,
-} = require("./routes/properties");
+const propertyRoutes = require("./routes/properties");
 const loginRoutes = require("./routes/login");
+const cookieParser = require('cookie-parser');
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -30,6 +29,7 @@ db.connect()
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan("dev"));
+app.use(cookieParser());
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
@@ -55,8 +55,8 @@ app.use(express.static("public"));
 // app.use("/api/users", usersRoutes(db));
 // app.use("/api/widgets", widgetsRoutes(db));
 
-app.use("/properties", getProperties(db));
-app.use("/properties", getProperty(db));
+app.use("/properties", propertyRoutes(db));
+//app.use("/properties", getProperty(db));
 app.use("/login", loginRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
@@ -64,6 +64,13 @@ app.use("/login", loginRoutes(db));
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
+app.post("/login", (req,res) => {
+  console.log('trylogin')
+  var randomNumber=Math.random().toString();
+  randomNumber=randomNumber.substring(2,randomNumber.length);
+  res.cookie('userCookie',randomNumber, { maxAge: 900000, httpOnly: true });
+  res.render("index");
+})
 
 app.get("/", (req, res) => {
   res.render("index");

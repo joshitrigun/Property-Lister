@@ -7,10 +7,7 @@ module.exports = (db) => {
       `SELECT * FROM favorites
       JOIN properties on properties.id =  property_id`)
       .then((data) => {
-        //console.log(data.rows);
-        //console.log(req.cookies)
         const templateVars = { favorites: data.rows };
-        //console.log(templateVars);
         res.render("favorite", templateVars);
       })
       .catch((err) => {
@@ -20,3 +17,11 @@ module.exports = (db) => {
   });
    return router;
 }
+/*
+ router.post("/:id", req,res) => {
+  db.query(
+    `INSERT INTO favorties (
+      user_id) VALUES ($1);`,[req.params.id]
+    )
+ }
+*/

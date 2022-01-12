@@ -3,12 +3,17 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM properties;`)
+    let queryString = `SELECT * FROM properties`;
+    let tokenPrice;
+    if (req.query) {
+      if (req.query.price) {
+        tokenPrice = Number(req.query.price);
+        queryString += ` WHERE cost >= $1 `;
+      }
+    }
+    db.query(queryString, tokenPrice ? [tokenPrice] : [])
       .then((data) => {
-        //console.log(data.rows);
-        console.log(req.cookies)
         const templateVars = { properties: data.rows };
-        //console.log(templateVars);
         res.render("properties", templateVars);
       })
       .catch((err) => {

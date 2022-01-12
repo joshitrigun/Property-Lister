@@ -7,7 +7,11 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const { getProperties, addProperties, getProperty} = require("./routes/properties");
+const {
+  getProperties,
+  addProperties,
+  getProperty,
+} = require("./routes/properties");
 const loginRoutes = require("./routes/login");
 
 // PG database client/connection setup
@@ -56,20 +60,6 @@ app.use("/properties", getProperties(db));
 app.use("/properties/:id", getProperty(db));
 app.use("/login", loginRoutes(db));
 
-/*
-app.get("/properties/:id", (req,res) => {
-  console.log('inside route',req.params)
-  db.query(`SELECT * FROM properties where id = ${req.params.id}`)
-    .then((data) => {
-      console.log('check', data.rows);
-      const templateVars = { property: data.rows[0] };
-      res.render("properties_id", templateVars);
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
-    })
-})
-*/
 // Note: mount other resources here, using the same pattern above
 
 // Home page

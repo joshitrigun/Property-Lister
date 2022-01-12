@@ -34,7 +34,7 @@
       <div class="collapse" id="filter">
         <form action="/properties" method="GET">
           <div class="mb-3">
-            <label for="Price" class="form-label">Price:</label>
+            <label for="Price" class="form-label">Min Price:</label>
             <input type="number" class="form-control" name="price">
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
@@ -54,7 +54,7 @@
               <div class="card-text d-flex justify-content-between">
                 <p class="cost">$<%= properties[property].cost %></p>
                 <% if (properties[property].isfeatured) { %>
-                  <i class="fas fa-star justify-content-end"></i>
+                  <i class="fas fa-star"></i>
                   <% } %>
                 <i class="fab fa-gratipay"></i>
               </div>

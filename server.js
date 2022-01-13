@@ -11,10 +11,10 @@ const app = express();
 const morgan = require("morgan");
 const propertyRoutes = require("./routes/properties");
 const loginRoutes = require("./routes/login");
-const favouriteRoute = require("./routes/favourite")
+const favouriteRoute = require("./routes/favourite");
 const messageRoutes = require("./routes/messages");
+const myProperty = require("./routes/myProperty");
 const cookieParser = require("cookie-parser");
-
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -62,8 +62,8 @@ app.use("/properties", propertyRoutes(db));
 //app.use("/properties", getProperty(db));
 app.use("/login", loginRoutes(db));
 app.use("/messages", messageRoutes(db));
-app.use("/favourite", favouriteRoute(db) )
-
+app.use("/favourite", favouriteRoute(db));
+app.use("/myProperty", myProperty(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page

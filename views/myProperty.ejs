@@ -27,33 +27,22 @@
   <body>
     <header id="header"><%-include('partials/_header') %></header>
     <main id="main">
-      <h3 class='text-center'>Properties</h3>
-      <a  data-bs-toggle="collapse" href="#filter" role="button" aria-expanded="false">
-        <p class="filter">Filter</p>
-      </a>
-      <div class="collapse" id="filter">
-        <form action="/properties" method="GET">
-          <div class="mb-3">
-            <label for="Price" class="form-label">Min Price:</label>
-            <input type="number" class="form-control" name="price">
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
+      <h3 class='text-center'>My Properties</h3>
+
       <div class="row row-cols-1 row-cols-md-3 g-4">
-        <% for(const property in properties) { %>
+        <% for(const property in myProperty) { %>
         <div class="col-4">
-          <div id="<%= properties[property].id%>" class="card h-100">
-            <img src="<%= properties[property].image_url %>" class="card-img-top" alt="..." />
+          <div id="<%= myProperty[property].id%>" class="card h-100">
+            <img src="<%= myProperty[property].image_url %>" class="card-img-top" alt="..." />
             <div class="card-body">
-              <h5 class="card-title"><%= properties[property].name %></h5>
-              <p class="card-text"><%= properties[property].description %></p>
+              <h5 class="card-title"><%= myProperty[property].name %></h5>
+              <p class="card-text"><%= myProperty[property].description %></p>
               <p class="card-text">
-                <p class="text-muted">Bed: <%= properties[property].number_of_bedrooms %> <span class="text-muted">Bath: <%= properties[property].number_of_bathrooms %></span></p>
+                <p class="text-muted">Bed: <%= myProperty[property].number_of_bedrooms %> <span class="text-muted">Bath: <%= myProperty[property].number_of_bathrooms %></span></p>
               </p>
               <div class="card-text d-flex justify-content-between">
-                <p class="cost">$<%= properties[property].cost %></p>
-                <% if (properties[property].isfeatured) { %>
+                <p class="cost">$<%= myProperty[property].cost %></p>
+                <% if (myProperty[property].isfeatured) { %>
                   <i class="fas fa-star"></i>
                   <% } %>
 

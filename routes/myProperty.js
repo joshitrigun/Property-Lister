@@ -4,18 +4,16 @@ const router = express.Router();
 module.exports = (db) => {
   router.get("/", (req, res) => {
     let user = req.cookies.userCookie;
-    db.query(
-      `SELECT * FROM favorites
-      JOIN properties on properties.id =  property_id`
-    )
+    //console.log(query);
+    db.query(`SELECT * FROM properties where owner_id = 1;`)
       .then((data) => {
-        const templateVars = { user: user, favorites: data.rows };
-        res.render("favourite", templateVars);
+        console.log(data.rows);
+        const templateVars = { user: user, myProperty: data.rows };
+        res.render("myProperty", templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
   });
-
   return router;
 };

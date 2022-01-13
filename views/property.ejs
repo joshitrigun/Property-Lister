@@ -48,7 +48,10 @@
               <p>City: <%= property.city %></p>
               <p>Postal Code: <%= property.postal_code %></p>
               <p class="text-title price">Price: $<%= property.cost %></p>
-              <form action="/properties/favourites/<%=property.id%>" method="post">
+              <form
+                action="/properties/favourites/<%=property.id%>"
+                method="post"
+              >
                 <button type="submit">Add to Favorites</button>
               </form>
             </div>
@@ -57,13 +60,20 @@
       </div>
       <div>
         <h3>Contact Property Owner</h3>
-        <form class="message-form" action="/properties/<%=property.id%>" method="post">
+        <p class="success-message"></p>
+        <form
+          class="message-form"
+          action="/properties/<%=property.id%>"
+          method="post"
+        >
           <textarea
-          class: message-text
+            class="message-text"
             name="message"
             placeholder="Type message here..."
           ></textarea>
-          <button id="message-submit-btn" class="message-btn" type="submit">Submit</button>
+          <button id="message-submit-btn" class="message-btn" type="submit">
+            Submit
+          </button>
         </form>
       </div>
     </main>

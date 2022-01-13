@@ -43,7 +43,7 @@
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <% for(const property in properties) { %>
         <div class="col-4">
-          <div id="<%= properties[property].id%>" class="card h-100">
+          <div id="<%= properties[property].id%>" class="card property-card h-100">
             <img src="<%= properties[property].image_url %>" class="card-img-top" alt="..." />
             <div class="card-body">
               <h5 class="card-title"><%= properties[property].name %></h5>
@@ -56,7 +56,6 @@
                 <% if (properties[property].isfeatured) { %>
                   <i class="fas fa-star"></i>
                   <% } %>
-                <i class="fab fa-gratipay"></i>
               </div>
             </div>
           </div>

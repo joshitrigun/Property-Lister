@@ -48,16 +48,15 @@ module.exports = (db) => {
       `INSERT INTO favorites (
         user_id,
         property_id) VALUES ($1, $2);`,
-        [user,
-        req.params.property_id])
-        .then((data) => {
-          res.redirect("/favourite")
-        })
-        .catch((err) => {
-          res.status(500).json({error: err.message });
-        });
-   });
-
+      [user, req.params.property_id]
+    )
+      .then((data) => {
+        res.redirect("/favourite");
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
 
   router.post("/", (req, res) => {
     db.query(
@@ -97,9 +96,8 @@ module.exports = (db) => {
         req.body.isActive,
       ]
     )
-      .then((res) => {
-        console.log(res.rows);
-        res.send(res.rows[0]);
+      .then((results) => {
+        res.redirect("/properties");
       })
       .catch((err) => {
         console.log(err);

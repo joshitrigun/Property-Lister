@@ -9,54 +9,59 @@ body {
 
 #body-id {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-direction: row-reverse;
 }
 
 #price {
   color: forestgreen;
+  font-size: 40px;
 }
 
 img {
-  height: 50%;
-  width: 50%;
-  margin-left: 400px;
+  height: 70%;
+  width: 70%;
   margin-top: 30px;
   border: 20px solid black;
   position: relative;
+  margin-bottom: 20px;
 }
 img:hover {
   box-shadow: 10px 10px 10px #545149;
 }
 
 #info-id {
-  margin-left: 120px;
-  margin-top: 100px;
-  width: 20%;
+  padding-left: 120px;
+  margin-top: 70px;
+  width: 50%;
+
 }
 
 #property-title {
-  margin: 20px;
+  padding: 40px;
+  font-size: 60px;
 }
 
 #address {
-  font-size: 20 px;
+  font-size: 20px;
   margin: 5px;
   font-weight: 600;
 }
 
 #description {
-  font-size: 20px;
+  font-size: 35px;
   font-weight: 800;
 }
 
 #features-title {
-  font-size: 30px;
-  font-weight: 600;
+  font-size: 35px;
+  font-weight: 800;
+  color:black;
 }
 
 #features {
   font-weight: 600;
+  font-size:20px;
 }
 
 #favourite {
@@ -67,4 +72,17 @@ img:hover {
   font-weight: 600;
   color: red;
   font-size: 20px;
+}
+button {
+  background-color:#4B3621;
+  color:white;
+  padding:8px;
+  font-size: 20px;
+}
+footer {
+  font-size:40px;
+  padding-left:50px;
+  color:black;
+  font-style:italic;
+  opacity: 50%;
 }

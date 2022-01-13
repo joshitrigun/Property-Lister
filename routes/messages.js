@@ -4,7 +4,6 @@ const router = express.Router();
 module.exports = (db) => {
   router.get("/", (req, res) => {
     const user = req.cookies.userCookie;
-    console.log(user);
     db.query(
       `SELECT messages.sender_id, messages.receiver_key, messages.property_id, messages.text, properties.image_url, properties.name AS property_name, users.*
       FROM messages
@@ -14,7 +13,6 @@ module.exports = (db) => {
       [user]
     )
       .then((data) => {
-        console.log("check", data.rows);
         const templateVars = { user: user, messages: data.rows };
         res.render("messages", templateVars);
       })

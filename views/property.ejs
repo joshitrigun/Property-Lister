@@ -1,76 +1,78 @@
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <title> Property</title>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Property</title>
 
-      <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-      <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-      <link rel="stylesheet" href="/styles/main.css" type="text/css" />
-      <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-      <!-- Header styles -->
-      <link rel="stylesheet" href="/styles/header.css" type="text/css" />
-      <!-- Page styles -->
-      <link rel="stylesheet" href="/styles/property.css" type="text/css" />
-      <!-- Bootstrap CSS -->
-      <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous"
-      />
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <!-- Header styles -->
+    <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+    <!-- Page styles -->
+    <link rel="stylesheet" href="/styles/property.css" type="text/css" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
 
-      <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-      <script type="text/javascript" src="/scripts/app.js"></script>
-    </head>
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+  </head>
 
-    <body>
-
-      <header id="header"><%-include('partials/_header') %></header>
+  <body>
+    <header id="header"><%-include('partials/_header') %></header>
 
     <main id="main">
-      <h1 id ="property-title"><%= property.name %></h1>
-        <div id= "body-id">
-            <div id = "upper-place">
-              <div>
-                <img
-                  src="<%= property.image_url %>"
-                  class="img-fluid rounded-start"
-                  alt="...">
-              </div>
-              <div>
-              <form action="/properties/<%=property.id%>" method="post">
+      <h2 id="property-title card-title"><%= property.name %></h2>
+      <div class="card">
+        <div class="row g-0">
+          <div class="col-md-7">
+            <img
+              src="<%= property.image_url %>"
+              class="img-fluid rounded-start"
+              alt="..."
+            />
+          </div>
+          <div class="col-md-5">
+            <div class="card-body">
+              <p class="text-title">Property Description:</p>
+              <p class="card-text"><%= property.description %></p>
+              <p class="text-title">Property Summary:</p>
+              <p>Bathrooms:<%= property.number_of_bathrooms %></p>
+              <p>Bedrooms:<%= property.number_of_bedrooms %></p>
+              <p>Street: <%= property.street %></p>
+              <p>City: <%= property.city %></p>
+              <p>Postal Code: <%= property.postal_code %></p>
+              <p class="text-title price">Price: $<%= property.cost %></p>
+              <form action="/properties/favourites/<%=property.id%>" method="post">
                 <button type="submit">Add to Favorites</button>
-              </div>
+              </form>
             </div>
-
-            <div id= "info-id">
-              <h2 id ="price">Price:  $<%= property.cost %></h3>
-
-              <h2 id= "description"><%= property.description %> </h2>
-              <div id= "address" >
-                <p><b>Street: </b> <%= property.street %></p>
-                <p><b>City: </b><%= property.city %></p>
-                <p><b>Postal Code: </b>  <%= property.postal_code %></p>
-              </div>
-
-              <h2 id="features-title"> Property Features </h2>
-              <div id ="features">
-                <p><b>Bathrooms:</b><%= property.number_of_bathrooms %></p>
-                <p><b>Bedrooms:</b><%= property.number_of_bedrooms %></p>
-
-              </div>
-            </div>
+          </div>
         </div>
+      </div>
+      <div>
+        <h3>Contact Property Owner</h3>
+        <form class="message-form" action="/properties/<%=property.id%>" method="post">
+          <textarea
+          class: message-text
+            name="message"
+            placeholder="Type message here..."
+          ></textarea>
+          <button id="message-submit-btn" class="message-btn" type="submit">Submit</button>
+        </form>
+      </div>
     </main>
 
-      <!-- Bootstrap Script -->
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"
-      ></script>
-    </body>
-    <footer>
-      <p> “Home is where our story begins…”</p>
-    </footer>
-  </html>
+    <!-- Bootstrap Script -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

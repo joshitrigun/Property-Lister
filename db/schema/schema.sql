@@ -33,20 +33,21 @@ CREATE TABLE properties(
   street VARCHAR(255) NOT NULL,
   isActive BOOLEAN,
   isFeatured BOOLEAN
+
 );
 
 
 CREATE TABLE favorites (
 id SERIAL PRIMARY KEY NOT NULL,
 user_id INTEGER  REFERENCES users(id),
-property_id INTEGER REFERENCES properties(id)
+property_id INTEGER REFERENCES properties(id) ON DELETE CASCADE
 );
 
 CREATE TABLE messages (
 id SERIAL PRIMARY KEY NOT NULL,
-sender_id INTEGER  REFERENCES favorites(id),
-receiver_key INTEGER  REFERENCES favorites(id),
-property_id INTEGER  REFERENCES properties(id),
+sender_id INTEGER  REFERENCES users(id),
+receiver_key INTEGER  REFERENCES users(id),
+property_id INTEGER  REFERENCES properties(id) ON DELETE CASCADE,
 text VARCHAR(255)
 );
 

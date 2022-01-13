@@ -64,14 +64,7 @@ module.exports = (db) => {
     db.query(
       `INSERT INTO messages (sender_id, property_id, text) VALUES ($1, $2, $3);`,
       [user, req.params.property_id, req.body.message]
-    )
-      .then((data) => {
-        res.redirect(`/properties/${req.params.property_id}`);
-        window.alert("Message Sent!");
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
+    );
   });
 
   router.post("/", (req, res) => {

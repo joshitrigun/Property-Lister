@@ -5,14 +5,15 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     const user = req.cookies.userCookie;
     db.query(
-      `SELECT messages.sender_id, messages.receiver_key, messages.property_id, messages.text, properties.image_url, properties.name AS property_name, users.*
+      `SELECT messages.id, messages.text, properties.image_url, properties.name AS property_name, users.name
       FROM messages
-      JOIN properties ON properties.id = messages.property_id
-      JOIN users ON users.id = messages.sender_id
-      WHERE messages.receiver_key = $1`,
+      INNER JOIN properties ON properties.id = messages.property_id
+      LEFT JOIN users ON users.id = messages.sender_id
+      WHERE properties.owner_id = $1`,
       [user]
     )
       .then((data) => {
+        console.log(data.rows);
         const templateVars = { user: user, messages: data.rows };
         res.render("messages", templateVars);
       })

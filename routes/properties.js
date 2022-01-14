@@ -130,7 +130,7 @@ module.exports = (db) => {
       [req.body.id]
     )
       .then((result) => {
-        res.send("/myProperty");
+        res.send("property sold");
         console.log(result);
       })
       .catch((err) => console.log(err));

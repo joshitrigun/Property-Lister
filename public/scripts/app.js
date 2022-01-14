@@ -10,18 +10,22 @@ $(document).ready(function () {
     $(".property-card").off("click");
     const id = $(this).data("id");
     const url = `properties`;
-    console.log(id);
+    //console.log(id);
     $.ajax({
       url: url,
       data: { id: id },
       method: "PUT",
     }).then((res) => {
-      console.log($($(e.currentTarget).parents()[3]));
-      let imgEl = $($(e.currentTarget).parents()[3]).children().first()[0];
-      console.log(imgEl);
-      $(e.currentTarget).closest("div.card").find(imgEl).fadeOut();
-      window.location.href = `http://localhost:8080/properties/`;
-      console.log($(e.currentTarget).closest("div.card").find(imgEl));
+      console.log("res", res);
+      //console.log($($(e.currentTarget).parents()[3]));
+      //let imgEl = $($(e.currentTarget).parents()[3]).children().first()[0];
+      //console.log(imgEl);
+      // $(e.currentTarget).closest("div.card").find(imgEl).fadeOut();
+      if (res === "property sold") {
+        location.reload();
+      }
+      // window.location.href = `http://localhost:8080/properties/`;
+      //console.log($(e.currentTarget).closest("div.card").find(imgEl));
     });
   });
 

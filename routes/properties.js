@@ -1,4 +1,5 @@
 const express = require("express");
+const res = require("express/lib/response");
 const router = express.Router();
 
 module.exports = (db) => {
@@ -104,5 +105,22 @@ module.exports = (db) => {
       });
   });
 
+  router.put("/", (req, res) => {
+    console.log(req.body);
+
+    db.query(
+      `
+      UPDATE properties
+      SET isActive = false, image_url = 'http://trishbelford.com/wp-content/uploads/2017/03/sold_2010127164213_400.jpeg'
+      WHERE properties.id=$1
+    `,
+      [req.body.id]
+    )
+      .then((result) => {
+        res.send("/myProperty");
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
+  });
   return router;
 };

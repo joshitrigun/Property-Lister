@@ -5,17 +5,61 @@ $(document).ready(function () {
     window.location.href = `http://localhost:8080/properties/${id}`;
   });
 
-  $("#message-submit-btn").on("click", function (e) {
+  $("#main .update").on("click", function (e) {
     e.preventDefault();
-    $(".message-text").val("");
-    $(".success-message").text("Message Sent!");
+
+    $(".property-card").off("click");
+    //console.log("I am clicked");
+    const id = $(this).data("id");
+    const url = `properties`;
+    console.log(id);
+    $.ajax({
+      url: url,
+      data: { id: id },
+      method: "PUT",
+    }).then((res) => {
+      //console.log({ res });
+      //console.log($(e.currentTarget).parents()[4]);
+      // console.log($($(e.currentTarget).parents()[3]).children().first()[0]);
+      //console.log($($($(e.currentTarget).parents()[3]).children().first()[0]));
+
+      console.log($($(e.currentTarget).parents()[3]));
+      let imgEl = $($(e.currentTarget).parents()[3]).children().first()[0];
+      console.log(imgEl);
+      $(e.currentTarget).closest("div.card").find(imgEl).fadeOut();
+      window.location.href = `http://localhost:8080/properties/`;
+      console.log($(e.currentTarget).closest("div.card").find(imgEl));
+
+      // css({
+      //   "background-color": "red",
+      //   opacity: "50%",
+      // });
+    });
+
+    //   $.ajax({
+    //     url: url,
+    //     data: { id: id },
+    //     method: "PUT",
+    //     success: (res) => {
+    //       console.log({ res });
+    //       console.log($(".property-card"));
+    //       $(".property-card").closest(".").blur();
+    //       // css({
+    //       //   "background-color": "red",
+    //       //   opacity: "50%",
+    //       // });
+    //     },
+    //     error: (error) => {
+    //       console.log(error);
+    //     },
+    //   });
   });
 
   $("#main .delete").each((element) => {
     element = $("#main .delete")[element];
     console.log("element", element);
     $(element).click(function (e) {
-      console.log("I am here inside");
+      //console.log("I am here inside");
       e.preventDefault();
       const id = $(this).data("id");
       const url = `/myProperty/${id}/delete`;

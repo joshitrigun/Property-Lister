@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home Page</title>
+    <title>Favourites Page</title>
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -10,7 +10,7 @@
     <!-- Header styles -->
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
     <!-- Page styles -->
-    <link rel="stylesheet" href="/styles/favorite.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/favourite.css" type="text/css" />
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -19,45 +19,40 @@
       crossorigin="anonymous"
     />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+
   </head>
 
   <body>
     <header id="header"><%-include('partials/_header') %></header>
     <main id="main">
       <h1 id = "favorite-header"> The Best from the Rest</h1>
-        <div class= "body-container">
-
+  <div class="row row-cols-1 row-cols-md-3 g-4">
       <% for(const favorite in favorites) { %>
-        <div class="card mb-3">
-          <div class ="image-container">
-            <img id ="fav-image"
-                src="<%= favorites[favorite].image_url %>"
-                class="img-fluid rounded-start"
-                alt="..."
-              />
-          </div>
-          <div class="info-container">
-              <p>$:<%=favorites[favorite].cost%></p>
-              <p><%= favorites[favorite].name %></p>
-              <p><%= favorites[favorite].city %></p>
-              <p><%= favorites[favorite].description%></p>
-              <p><%= favorites[favorite].number_of_bathrooms%></p>
-              <p><%= favorites[favorite].number_of_bedrooms%></p>
+        <div class="card-deck col-4">
+          <div class="card">
+            <img class="card-img-top" src="<%= favorites[favorite].image_url %>" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title"><%= favorites[favorite].name %></h5>
+              <p class="card-text"><%= favorites[favorite].description %></p>
+              <p class="card-text"><%= favorites[favorite].city %></p>
+              <p id= "price" class="card-text">$<%= favorites[favorite].cost %></p>
+
+
+              <p class="card-text text-muted">Bath: <%= favorites[favorite].number_of_bathrooms%>  <span class="text-muted">Bed: <%= favorites[favorite].number_of_bedrooms%></span></p>
             </div>
-        </div>
+          </div>
+
+            <div class="card-text d-flex justify-content-between">
+            </div>
+          </div>
         <% } %>
-      </div>
-    </main>
+        </div>
+      </main>
 
     <!-- Scripts -->
     <script src="../public/app.js"></script>
     <!-- Bootstrap Script -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
   </body>
 </html>

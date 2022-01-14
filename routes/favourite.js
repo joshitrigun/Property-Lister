@@ -6,7 +6,8 @@ module.exports = (db) => {
     let user = req.cookies.userCookie;
     db.query(
       `SELECT * FROM favorites
-      JOIN properties on properties.id =  property_id`
+      JOIN properties on properties.id =  property_id
+      ORDER BY favorites.id DESC`
     )
       .then((data) => {
         const templateVars = { user: user, favorites: data.rows };

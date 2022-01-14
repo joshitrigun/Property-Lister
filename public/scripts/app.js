@@ -5,6 +5,12 @@ $(document).ready(function () {
     window.location.href = `http://localhost:8080/properties/${id}`;
   });
 
+  $("#message-submit-btn").on("click", function (e) {
+    e.preventDefault();
+    $(".message-text").val("");
+    $(".success-message").text("Message Sent!");
+  });
+
   $("#main .delete").each((element) => {
     element = $("#main .delete")[element];
     console.log("element", element);

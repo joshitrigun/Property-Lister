@@ -26,5 +26,5 @@ INSERT INTO properties
 INSERT INTO favorites (user_id, property_id)
 VALUES (1, 1), (1, 2), (2, 3), (3, 4);
 
-INSERT INTO messages (sender_id, receiver_key, property_id, text)
-VALUES (1, 2, 4, 'hi'),(2, 1, 4, 'hello') ;
+INSERT INTO messages (sender_id, property_id, text)
+VALUES (1, 4, 'hi'),(2, 2, 'hello') ;

@@ -44,7 +44,9 @@
           <div class="col-md-8">
             <div class="card-body">
               <h5 class="card-title"><%= messages[message].property_name %></h5>
-              <p class="card-text">Sender: <%= messages[message].name %></p>
+              <p class="card-text">
+                Sender: <%= messages[message].name || "Anonymous" %>
+              </p>
               <p class="card-text">Message: <%= messages[message].text %></p>
             </div>
           </div>

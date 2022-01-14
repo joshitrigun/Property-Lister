@@ -1,4 +1,5 @@
 const express = require("express");
+const res = require("express/lib/response");
 const router = express.Router();
 
 module.exports = (db) => {
@@ -41,7 +42,7 @@ module.exports = (db) => {
       });
   });
 
-  router.post("/:property_id", (req, res) => {
+  router.post("/favourites/:property_id", (req, res) => {
     let user = req.cookies.userCookie;
     console.log(req);
     db.query(
@@ -56,6 +57,15 @@ module.exports = (db) => {
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
+  });
+
+  router.post("/:property_id", (req, res) => {
+    let user = req.cookies.userCookie;
+    console.log(req);
+    db.query(
+      `INSERT INTO messages (sender_id, property_id, text) VALUES ($1, $2, $3);`,
+      [user, req.params.property_id, req.body.message]
+    );
   });
 
   router.post("/", (req, res) => {
@@ -104,5 +114,22 @@ module.exports = (db) => {
       });
   });
 
+  router.put("/", (req, res) => {
+    console.log(req.body);
+
+    db.query(
+      `
+      UPDATE properties
+      SET isActive = false, image_url = 'http://trishbelford.com/wp-content/uploads/2017/03/sold_2010127164213_400.jpeg'
+      WHERE properties.id=$1
+    `,
+      [req.body.id]
+    )
+      .then((result) => {
+        res.send("/myProperty");
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
+  });
   return router;
 };

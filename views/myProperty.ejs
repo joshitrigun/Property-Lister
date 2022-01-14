@@ -43,6 +43,7 @@
               <div class="card-text d-flex justify-content-between">
                 <p class="cost">$<%= myProperty[property].cost %></p>
 
+                    <form method="PUT" action="/myProperty"><i class="update fas fa-money-check-alt" data-id="<%= myProperty[property].id %>"></i></form>
                     <form method="POST" action="/myProperty/<%= myProperty[property].id %>/delete">
                      <i class="delete fas fa-trash-alt" data-id="<%= myProperty[property].id %>"></i>
                     </form>

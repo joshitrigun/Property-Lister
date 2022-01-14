@@ -5,6 +5,8 @@ $(document).ready(function () {
     window.location.href = `http://localhost:8080/properties/${id}`;
   });
 
+<<<<<<< HEAD
+=======
   $("#main .update").on("click", function (e) {
     e.preventDefault();
 
@@ -55,6 +57,7 @@ $(document).ready(function () {
     //   });
   });
 
+>>>>>>> a0799e2de74bb04df8237f279df44750bd74887a
   $("#main .delete").each((element) => {
     element = $("#main .delete")[element];
     console.log("element", element);

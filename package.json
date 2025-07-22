@@ -14,11 +14,11 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "cookie-parser": "^1.4.6",
-    "cookie-session": "^2.0.0",
+    "cookie-session": "^2.1.1",
     "dotenv": "^2.0.0",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
-    "morgan": "^1.9.1",
+    "morgan": "^1.10.1",
     "pg": "^8.5.0",
     "pg-native": "^3.0.0",
     "sass": "^1.35.1"

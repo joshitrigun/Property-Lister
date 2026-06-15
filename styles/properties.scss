@@ -10,13 +10,21 @@
   color: black;
 }
 
-#main .col-4 {
+#main .col {
   padding: 10px 10px;
 }
 
 #main .card {
   max-width: 100%;
+  color: inherit;
   cursor: pointer;
+  text-decoration: none;
+}
+
+#main .card:hover,
+#main .card:focus {
+  color: inherit;
+  text-decoration: none;
 }
 
 #main .card .card-title {
@@ -32,8 +40,21 @@
 }
 #main .card img {
   height: 400px;
+  object-fit: cover;
 }
 
 #main .fa-star {
   color: red;
+}
+
+#main .property-actions {
+  display: flex;
+  gap: 10px;
+}
+
+#main .property-action {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
 }

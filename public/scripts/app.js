@@ -1,55 +1,37 @@
 // Client facing scripts here
-/* global $, document, window, location */
+/* global $, document, location */
 $(document).ready(function () {
-  $(".property-card").on("click", function () {
-    const id = $(this).attr("id");
-    window.location.href = `/properties/${id}`;
-  });
-
   $("#main .update").on("click", function (e) {
     e.preventDefault();
-    $(".property-card").off("click");
     const id = $(this).data("id");
     const url = `properties`;
-    //console.log(id);
+
     $.ajax({
       url: url,
       data: { id: id },
       method: "PUT",
     }).then((res) => {
-      console.log("res", res);
-      //console.log($($(e.currentTarget).parents()[3]));
-      //let imgEl = $($(e.currentTarget).parents()[3]).children().first()[0];
-      //console.log(imgEl);
-      // $(e.currentTarget).closest("div.card").find(imgEl).fadeOut();
       if (res === "property sold") {
         location.reload();
       }
-      // window.location.href = `http://localhost:8080/properties/`;
-      //console.log($(e.currentTarget).closest("div.card").find(imgEl));
     });
   });
 
-  $("#main .delete").each((element) => {
-    element = $("#main .delete")[element];
-    console.log("element", element);
-    $(element).click(function (e) {
-      //console.log("I am here inside");
-      e.preventDefault();
-      const id = $(this).data("id");
-      const url = `/myProperty/${id}/delete`;
+  $("#main .delete").on("click", function (e) {
+    e.preventDefault();
+    const button = $(this);
+    const id = button.data("id");
+    const url = `/myProperty/${id}/delete`;
 
-      $.ajax({
-        url: url,
-        method: "DELETE",
-        success: (res) => {
-          console.log(res);
-          $(element).closest(".col-4").fadeOut();
-        },
-        error: (error) => {
-          console.error(error);
-        },
-      });
+    $.ajax({
+      url: url,
+      method: "DELETE",
+      success: () => {
+        button.closest(".col").fadeOut();
+      },
+      error: (error) => {
+        console.error(error);
+      },
     });
   });
 });

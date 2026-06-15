@@ -51,3 +51,10 @@ property_id INTEGER  REFERENCES properties(id) ON DELETE CASCADE,
 text VARCHAR(255)
 );
 
+CREATE INDEX properties_owner_id_idx ON properties(owner_id);
+CREATE INDEX properties_cost_idx ON properties(cost);
+CREATE UNIQUE INDEX favorites_user_property_idx ON favorites(user_id, property_id);
+CREATE INDEX favorites_property_id_idx ON favorites(property_id);
+CREATE INDEX messages_property_id_idx ON messages(property_id);
+CREATE INDEX messages_sender_id_idx ON messages(sender_id);
+

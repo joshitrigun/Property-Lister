@@ -3,7 +3,6 @@ require("dotenv").config();
 
 // Web server config
 const PORT = process.env.PORT || 8080;
-const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 //app.set('views', __dirname + '/views');
 const app = express();
@@ -20,7 +19,7 @@ const cookieSession = require("cookie-session");
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
-db.connect()
+db.query("SELECT 1")
   .then(() => {
     console.log("Connection passed");
   })
@@ -42,16 +41,10 @@ app.use(cookieSession({
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  "/styles",
-  sassMiddleware({
-    source: __dirname + "/styles",
-    destination: __dirname + "/public/styles",
-    isSass: false, // false => scss, true => sass
-  })
-);
-
-app.use(express.static("public"));
+app.use(express.static("public", {
+  maxAge: process.env.NODE_ENV === "production" ? "7d" : 0,
+  etag: true,
+}));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own

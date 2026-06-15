@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "sass styles:public/styles --style=compressed",
+    "prestart": "npm run build:css",
     "start": "node server.js",
+    "prelocal": "npm run build:css",
     "local": "./node_modules/.bin/nodemon -L --ignore public/",
     "db:reset": "node bin/resetdb.js"
   },

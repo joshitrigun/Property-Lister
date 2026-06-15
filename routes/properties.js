@@ -1,18 +1,39 @@
 const express = require("express");
 const router = express.Router();
 
+const PROPERTY_CARD_COLUMNS = `
+  id,
+  name,
+  description,
+  cost,
+  image_url,
+  number_of_bedrooms,
+  number_of_bathrooms,
+  isFeatured
+`;
+
+const getPagination = function (query) {
+  const limit = Math.min(Number(query.limit) || 24, 48);
+  const page = Math.max(Number(query.page) || 1, 1);
+  return { limit, offset: (page - 1) * limit };
+};
+
 module.exports = (db) => {
   router.get("/", (req, res) => {
     let user = req.session.userId;
-    let queryString = `SELECT * FROM properties`;
-    let tokenPrice;
+    const { limit, offset } = getPagination(req.query);
+    let queryString = `SELECT ${PROPERTY_CARD_COLUMNS} FROM properties`;
+    const queryParams = [];
     if (req.query) {
       if (req.query.price) {
-        tokenPrice = Number(req.query.price);
-        queryString += ` WHERE cost >= $1 `;
+        queryParams.push(Number(req.query.price));
+        queryString += ` WHERE cost >= $${queryParams.length} `;
       }
     }
-    db.query(queryString, tokenPrice ? [tokenPrice] : [])
+    queryParams.push(limit, offset);
+    queryString += ` ORDER BY id DESC LIMIT $${queryParams.length - 1} OFFSET $${queryParams.length}`;
+
+    db.query(queryString, queryParams)
       .then((data) => {
         const templateVars = { user: user, properties: data.rows };
         res.render("properties", templateVars);
@@ -53,10 +74,8 @@ module.exports = (db) => {
 
     db.query(
       `INSERT INTO favorites (user_id, property_id)
-        SELECT $1, $2
-        WHERE NOT EXISTS (
-          SELECT 1 FROM favorites WHERE user_id = $1 AND property_id = $2
-        );`,
+        VALUES ($1, $2)
+        ON CONFLICT (user_id, property_id) DO NOTHING;`,
       [user, req.params.property_id]
     )
       .then(() => {

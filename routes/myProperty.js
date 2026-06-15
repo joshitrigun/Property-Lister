@@ -4,12 +4,22 @@ const router = express.Router();
 module.exports = (db) => {
   router.get("/", (req, res) => {
     let user = req.session.userId;
+    const limit = Math.min(Number(req.query.limit) || 24, 48);
+    const page = Math.max(Number(req.query.page) || 1, 1);
+    const offset = (page - 1) * limit;
     //console.log(query);
     if (!user) {
       return res.redirect("/login");
     }
 
-    db.query(`SELECT * FROM properties where owner_id = $1;`, [user])
+    db.query(
+      `SELECT id, name, description, cost, image_url, number_of_bedrooms, number_of_bathrooms
+      FROM properties
+      WHERE owner_id = $1
+      ORDER BY id DESC
+      LIMIT $2 OFFSET $3;`,
+      [user, limit, offset]
+    )
       .then((data) => {
         const templateVars = { user: user, myProperty: data.rows };
         res.render("myProperty", templateVars);

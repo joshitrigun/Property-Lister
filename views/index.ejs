@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>Home Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -29,12 +30,14 @@
         id="bg"
         src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80"
         alt=""
+        width="2080"
+        height="1387"
       />
     </div>
     <header id="header"><%-include('partials/_header') %></header>
     <main class="index-container">
       <h3>Find your dream property!</h3>
-      <a href="/properties"><button>View All Properties</button></a>
+      <a class="index-cta" href="/properties">View All Properties</a>
     </main>
 
     <!-- Bootstrap Script -->

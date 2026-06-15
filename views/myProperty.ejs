@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>Home Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -29,24 +30,25 @@
     <main id="main">
       <h3 class='text-center'>My Properties</h3>
 
-      <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         <% for(const property in myProperty) { %>
-        <div class="col-4">
+        <div class="col">
           <div id="<%= myProperty[property].id%>" class="card h-100">
-            <img src="<%= myProperty[property].image_url %>" class="card-img-top" alt="..." />
+            <img src="<%= myProperty[property].image_url %>" class="card-img-top" alt="<%= myProperty[property].name %>" loading="lazy" width="400" height="260" />
             <div class="card-body">
               <h5 class="card-title"><%= myProperty[property].name %></h5>
               <p class="card-text"><%= myProperty[property].description %></p>
-              <p class="card-text">
-                <p class="text-muted">Bed: <%= myProperty[property].number_of_bedrooms %> <span class="text-muted">Bath: <%= myProperty[property].number_of_bathrooms %></span></p>
-              </p>
+              <p class="card-text text-muted">Bed: <%= myProperty[property].number_of_bedrooms %> <span>Bath: <%= myProperty[property].number_of_bathrooms %></span></p>
               <div class="card-text d-flex justify-content-between">
-                <p class="cost">$<%= myProperty[property].cost %></p>
-                  
-                    <form method="PUT" action="/myProperty"><i class="update fas fa-money-check-alt" data-id="<%= myProperty[property].id %>"></i></form>
-                    <form method="POST" action="/myProperty/<%= myProperty[property].id %>/delete">
-                     <i class="delete fas fa-trash-alt" data-id="<%= myProperty[property].id %>"></i>
-                    </form>
+                <span class="cost">$<%= myProperty[property].cost %></span>
+                <div class="property-actions">
+                  <button type="button" class="property-action update" data-id="<%= myProperty[property].id %>" aria-label="Mark <%= myProperty[property].name %> as sold">
+                    <i class="fas fa-money-check-alt" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="property-action delete" data-id="<%= myProperty[property].id %>" aria-label="Delete <%= myProperty[property].name %>">
+                    <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                  </button>
+                </div>
 
               </div>
             </div>

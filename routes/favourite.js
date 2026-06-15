@@ -3,11 +3,17 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    let user = req.cookies.userCookie;
+    let user = req.session.userId;
+    if (!user) {
+      return res.redirect("/login");
+    }
+
     db.query(
       `SELECT * FROM favorites
       JOIN properties on properties.id =  property_id
-      ORDER BY favorites.id DESC`
+      WHERE favorites.user_id = $1
+      ORDER BY favorites.id DESC`,
+      [user]
     )
       .then((data) => {
         const templateVars = { user: user, favorites: data.rows };

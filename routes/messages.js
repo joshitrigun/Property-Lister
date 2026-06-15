@@ -3,7 +3,11 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    const user = req.cookies.userCookie;
+    const user = req.session.userId;
+    if (!user) {
+      return res.redirect("/login");
+    }
+
     db.query(
       `SELECT messages.id, messages.text, properties.image_url, properties.name AS property_name, users.name
       FROM messages

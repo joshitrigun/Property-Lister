@@ -1,8 +1,9 @@
 // Client facing scripts here
+/* global $, document, window, location */
 $(document).ready(function () {
-  $(".property-card").on("click", function (e) {
+  $(".property-card").on("click", function () {
     const id = $(this).attr("id");
-    window.location.href = `http://localhost:8080/properties/${id}`;
+    window.location.href = `/properties/${id}`;
   });
 
   $("#main .update").on("click", function (e) {

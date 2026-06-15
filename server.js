@@ -14,7 +14,7 @@ const loginRoutes = require("./routes/login");
 const favouriteRoute = require("./routes/favourite");
 const messageRoutes = require("./routes/messages");
 const myProperty = require("./routes/myProperty");
-const cookieParser = require("cookie-parser");
+const cookieSession = require("cookie-session");
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -32,7 +32,12 @@ db.connect()
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan("dev"));
-app.use(cookieParser());
+app.use(cookieSession({
+  name: "session",
+  keys: [process.env.SESSION_SECRET || "development-session-secret"],
+  maxAge: 24 * 60 * 60 * 1000,
+  httpOnly: true,
+}));
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
@@ -72,19 +77,19 @@ app.use("/myProperty", myProperty(db));
 
 // LOGIN
 app.post("/login", (req, res) => {
-  res.cookie("userCookie", 1, { maxAge: 900000, httpOnly: true });
+  req.session.userId = 1;
   res.redirect("/properties");
 });
 
 // LOGOUT
 app.post("/logout", (req, res) => {
-  res.clearCookie("userCookie");
+  req.session = null;
   res.redirect("/");
 });
 
 // HOME PAGE
 app.get("/", (req, res) => {
-  let user = req.cookies.userCookie;
+  let user = req.session.userId;
   const templateVars = { user: user };
   res.render("index", templateVars);
 });

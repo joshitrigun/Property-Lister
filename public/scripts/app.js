@@ -10,6 +10,7 @@ $(document).ready(function () {
       url: url,
       data: { id: id },
       method: "PUT",
+      headers: { "x-csrf-token": $(this).data("csrf") },
     }).then((res) => {
       if (res === "property sold") {
         location.reload();
@@ -26,6 +27,7 @@ $(document).ready(function () {
     $.ajax({
       url: url,
       method: "DELETE",
+      headers: { "x-csrf-token": button.data("csrf") },
       success: () => {
         button.closest(".col").fadeOut();
       },

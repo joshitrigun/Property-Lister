@@ -53,6 +53,7 @@
                 action="/properties/favourites/<%=property.id%>"
                 method="post"
               >
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <button type="submit">Add to Favorites</button>
               </form>
             </div>
@@ -67,6 +68,7 @@
           action="/properties/<%=property.id%>"
           method="post"
         >
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <textarea
             class="message-text"
             name="message"

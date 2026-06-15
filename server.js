@@ -6,8 +6,14 @@ const PORT = process.env.PORT || 8080;
 const express = require("express");
 //app.set('views', __dirname + '/views');
 const app = express();
+const crypto = require("crypto");
+
+if (process.env.NODE_ENV === "production" && !process.env.SESSION_SECRET) {
+  throw new Error("SESSION_SECRET must be set in production");
+}
 
 const morgan = require("morgan");
+const helmet = require("helmet");
 const propertyRoutes = require("./routes/properties");
 const loginRoutes = require("./routes/login");
 const favouriteRoute = require("./routes/favourite");
@@ -31,30 +37,43 @@ db.query("SELECT 1")
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan("dev"));
+app.use(helmet({
+  contentSecurityPolicy: false,
+}));
+app.set("trust proxy", 1);
 app.use(cookieSession({
   name: "session",
   keys: [process.env.SESSION_SECRET || "development-session-secret"],
   maxAge: 24 * 60 * 60 * 1000,
   httpOnly: true,
+  sameSite: "lax",
+  secure: process.env.NODE_ENV === "production",
 }));
 
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+
+app.use((req, res, next) => {
+  if (!req.session.csrfToken) {
+    req.session.csrfToken = crypto.randomBytes(32).toString("hex");
+  }
+
+  res.locals.csrfToken = req.session.csrfToken;
+
+  if (["POST", "PUT", "PATCH", "DELETE"].includes(req.method)) {
+    const requestToken = req.body._csrf || req.get("x-csrf-token");
+    if (requestToken !== req.session.csrfToken) {
+      return res.status(403).send("Invalid CSRF token");
+    }
+  }
+
+  next();
+});
 
 app.use(express.static("public", {
   maxAge: process.env.NODE_ENV === "production" ? "7d" : 0,
   etag: true,
 }));
-
-// Separated Routes for each Resource
-// Note: Feel free to replace the example routes below with your own
-// const usersRoutes = require("./routes/users");
-// const widgetsRoutes = require("./routes/widgets");
-
-// Mount all resource routes
-// Note: Feel free to replace the example routes below with your own
-// app.use("/api/users", usersRoutes(db));
-// app.use("/api/widgets", widgetsRoutes(db));
 
 app.use("/properties", propertyRoutes(db));
 //app.use("/properties", getProperty(db));

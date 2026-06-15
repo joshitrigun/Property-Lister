@@ -1,11 +1,25 @@
 const express = require("express");
 const router = express.Router();
 
+const parsePositiveInteger = function (value, fallback, max) {
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    return fallback;
+  }
+
+  return max ? Math.min(parsed, max) : parsed;
+};
+
+const sendServerError = function (res, err) {
+  console.error(err);
+  res.status(500).json({ error: "Internal server error" });
+};
+
 module.exports = (db) => {
   router.get("/", (req, res) => {
     let user = req.session.userId;
-    const limit = Math.min(Number(req.query.limit) || 24, 48);
-    const page = Math.max(Number(req.query.page) || 1, 1);
+    const limit = parsePositiveInteger(req.query.limit, 24, 48);
+    const page = parsePositiveInteger(req.query.page, 1);
     const offset = (page - 1) * limit;
     //console.log(query);
     if (!user) {
@@ -25,18 +39,22 @@ module.exports = (db) => {
         res.render("myProperty", templateVars);
       })
       .catch((err) => {
-        res.status(500).json({ error: err.message });
+        sendServerError(res, err);
       });
   });
   router.delete("/:id/delete", (req, res) => {
     let user = req.session.userId;
-    let property = req.params.id;
+    let property = parsePositiveInteger(req.params.id);
     //console.log(query);
     // console.log("property", property);
     // return res.json({ message: "Message success" });
 
     if (!user) {
       return res.status(401).json({ error: "Login required" });
+    }
+
+    if (!property) {
+      return res.status(400).json({ error: "Invalid property id" });
     }
 
     db.query(`DELETE FROM properties where id = $1 AND owner_id = $2;`, [property, user])
@@ -48,7 +66,7 @@ module.exports = (db) => {
         res.json({ message: "Property deleted" });
       })
       .catch((err) => {
-        res.status(500).json({ error: err.message });
+        sendServerError(res, err);
       });
   });
   return router;

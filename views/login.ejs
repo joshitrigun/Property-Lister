@@ -22,6 +22,7 @@
     <main id="main">
       <h1 class="login-text"> Login into Property Lister</h1>
         <form action="/login" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button class="login-button"type="submit" >LOGIN</button>
         </form>
     </main>

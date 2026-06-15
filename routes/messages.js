@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
+const sendServerError = function (res, err) {
+  console.error(err);
+  res.status(500).json({ error: "Internal server error" });
+};
+
 module.exports = (db) => {
   router.get("/", (req, res) => {
     const user = req.session.userId;
@@ -17,12 +22,11 @@ module.exports = (db) => {
       [user]
     )
       .then((data) => {
-        console.log(data.rows);
         const templateVars = { user: user, messages: data.rows };
         res.render("messages", templateVars);
       })
       .catch((err) => {
-        res.status(500).json({ error: err.message });
+        sendServerError(res, err);
       });
   });
 

@@ -40,6 +40,7 @@
         </li>
         <li>
           <form class="form-inline" action="/logout" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button type="submit" class="btn btn-outline-dark">Logout</button>
           </form>
         </li>

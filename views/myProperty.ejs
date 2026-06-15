@@ -42,10 +42,10 @@
               <div class="card-text d-flex justify-content-between">
                 <span class="cost">$<%= myProperty[property].cost %></span>
                 <div class="property-actions">
-                  <button type="button" class="property-action update" data-id="<%= myProperty[property].id %>" aria-label="Mark <%= myProperty[property].name %> as sold">
+                  <button type="button" class="property-action update" data-id="<%= myProperty[property].id %>" data-csrf="<%= csrfToken %>" aria-label="Mark <%= myProperty[property].name %> as sold">
                     <i class="fas fa-money-check-alt" aria-hidden="true"></i>
                   </button>
-                  <button type="button" class="property-action delete" data-id="<%= myProperty[property].id %>" aria-label="Delete <%= myProperty[property].name %>">
+                  <button type="button" class="property-action delete" data-id="<%= myProperty[property].id %>" data-csrf="<%= csrfToken %>" aria-label="Delete <%= myProperty[property].name %>">
                     <i class="fas fa-trash-alt" aria-hidden="true"></i>
                   </button>
                 </div>

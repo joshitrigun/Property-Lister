@@ -32,6 +32,7 @@
     <header id="header"><%-include('partials/_header') %></header>
     <h3 id="title-header">Add New Properties</h3>
     <form id="add-new-property" action="/properties" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <div class="form-group">
         <label for="name">Name</label>
         <input

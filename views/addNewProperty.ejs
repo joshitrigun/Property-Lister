@@ -74,33 +74,66 @@
         />
       </div>
       <div class="form-group">
-        <label for="image-url">Image URL</label>
-        <input
-          type="text"
-          class="form-control"
-          id="image-url"
-          name="imageUrl"
-          placeholder="image location"
-        />
+        <label>Images</label>
+        <div id="image-url-list">
+          <div class="image-url-row mb-2 d-flex gap-2">
+            <input type="text" class="form-control" name="imageUrl" placeholder="Primary image URL (required)" required />
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-secondary btn-sm mt-1" id="add-image-btn">
+          + Add another image
+        </button>
+        <small class="form-text text-muted">First URL is the cover photo. Additional URLs become gallery slides.</small>
       </div>
       <div class="form-group">
         <label for="bedrooms">Number of bedrooms</label>
         <input
-          type="text"
+          type="number"
           class="form-control"
           id="bedrooms"
           name="bedrooms"
+          min="0"
           placeholder=""
         />
       </div>
       <div class="form-group">
         <label for="bathrooms">Number of bathrooms</label>
         <input
-          type="text"
+          type="number"
           class="form-control"
           id="bathrooms"
           name="bathrooms"
+          min="0"
           placeholder=""
+        />
+      </div>
+      <div class="form-group">
+        <label for="square_feet">Square Feet</label>
+        <input
+          type="number"
+          class="form-control"
+          id="square_feet"
+          name="square_feet"
+          min="0"
+          placeholder="e.g. 1200"
+        />
+      </div>
+      <div class="form-group">
+        <label for="property_type">Property Type</label>
+        <select class="form-control" id="property_type" name="property_type" required>
+          <% validPropertyTypes.forEach(function(t) { %>
+          <option value="<%= t %>"><%= t %></option>
+          <% }); %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="neighbourhood">Neighbourhood</label>
+        <input
+          type="text"
+          class="form-control"
+          id="neighbourhood"
+          name="neighbourhood"
+          placeholder="e.g. Steveston"
         />
       </div>
       <div class="form-group">
@@ -156,5 +189,25 @@
 
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <script>
+      document.getElementById('add-image-btn').addEventListener('click', function () {
+        var list = document.getElementById('image-url-list');
+        var row = document.createElement('div');
+        row.className = 'image-url-row mb-2 d-flex gap-2';
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'form-control';
+        input.name = 'extraImageUrl';
+        input.placeholder = 'Additional image URL';
+        var removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'btn btn-outline-danger btn-sm';
+        removeBtn.textContent = '✕';
+        removeBtn.addEventListener('click', function () { row.remove(); });
+        row.appendChild(input);
+        row.appendChild(removeBtn);
+        list.appendChild(row);
+      });
+    </script>
   </body>
 </html>

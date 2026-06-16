@@ -19,6 +19,7 @@ const loginRoutes = require("./routes/login");
 const favouriteRoute = require("./routes/favourite");
 const messageRoutes = require("./routes/messages");
 const myProperty = require("./routes/myProperty");
+const savedSearchesRoutes = require("./routes/savedSearches");
 const cookieSession = require("cookie-session");
 
 // PG database client/connection setup
@@ -59,6 +60,7 @@ app.use((req, res, next) => {
   }
 
   res.locals.csrfToken = req.session.csrfToken;
+  res.locals.currentPath = req.path;
 
   if (["POST", "PUT", "PATCH", "DELETE"].includes(req.method)) {
     const requestToken = req.body._csrf || req.get("x-csrf-token");
@@ -81,17 +83,12 @@ app.use("/login", loginRoutes(db));
 app.use("/messages", messageRoutes(db));
 app.use("/favourite", favouriteRoute(db));
 app.use("/myProperty", myProperty(db));
+app.use("/saved-searches", savedSearchesRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-
-// LOGIN
-app.post("/login", (req, res) => {
-  req.session.userId = 1;
-  res.redirect("/properties");
-});
 
 // LOGOUT
 app.post("/logout", (req, res) => {

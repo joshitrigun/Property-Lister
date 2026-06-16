@@ -11,39 +11,45 @@
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
     <!-- Page styles -->
     <link rel="stylesheet" href="/styles/login.css" type="text/css" />
-  <title>Login - Property Lister</title>
+  <title>Create an account - Property Lister</title>
 
 </head>
 
 <body>
 
-
   <header id="header"><%- include('partials/_header') %></header>
     <main id="main">
       <div class="auth-card">
-        <h1 class="login-text">Welcome back</h1>
+        <h1 class="login-text">Create your account</h1>
         <% if (typeof error !== 'undefined' && error) { %>
         <p class="login-error" role="alert"><%= error %></p>
         <% } %>
-        <form action="/login" method="post">
+        <form action="/login/register" method="post">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" id="name" name="name" value="<%= values && values.name ? values.name : '' %>" required autofocus>
+          </div>
+          <div class="form-group">
             <label for="email">Email</label>
-            <input class="form-control" type="email" id="email" name="email" value="<%= typeof email !== 'undefined' ? email : '' %>" required autofocus>
+            <input class="form-control" type="email" id="email" name="email" value="<%= values && values.email ? values.email : '' %>" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input class="form-control" type="tel" id="phone" name="phone" value="<%= values && values.phone ? values.phone : '' %>" required>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input class="form-control" type="password" id="password" name="password" required>
+            <input class="form-control" type="password" id="password" name="password" minlength="8" required>
+            <small class="form-text text-muted">At least 8 characters.</small>
           </div>
-          <button class="login-button" type="submit">Log in</button>
+          <button class="login-button" type="submit">Create account</button>
         </form>
         <p class="login-register-link">
-          Don't have an account? <a href="/login/register">Create one</a>
+          Already have an account? <a href="/login">Log in</a>
         </p>
       </div>
     </main>
-</div>
-
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

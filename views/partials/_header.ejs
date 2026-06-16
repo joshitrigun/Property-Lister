@@ -13,45 +13,43 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav align-items-center">
         <% if( user ){ %>
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/properties"
-            >Properties</a
-          >
+          <a class="nav-link<%= currentPath.startsWith('/properties') ? ' active' : '' %>" href="/properties">Properties</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/properties/new"
-            >Add Property</a
-          >
+          <a class="nav-link<%= currentPath === '/properties/new' ? ' active' : '' %>" href="/properties/new">Add Property</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/myProperty"
-            >My Properties</a
-          >
+          <a class="nav-link<%= currentPath.startsWith('/myProperty') ? ' active' : '' %>" href="/myProperty">My Properties</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/messages">Messages</a>
+          <a class="nav-link<%= currentPath.startsWith('/messages') ? ' active' : '' %>" href="/messages">Messages</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/favourite"
-            >Favourites</a
-          >
+          <a class="nav-link<%= currentPath.startsWith('/favourite') ? ' active' : '' %>" href="/favourite">Favourites</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link<%= currentPath.startsWith('/saved-searches') ? ' active' : '' %>" href="/saved-searches">
+            <i class="fas fa-bookmark"></i> Saved Searches
+          </a>
         </li>
         <li>
           <form class="form-inline" action="/logout" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button type="submit" class="btn btn-outline-dark">Logout</button>
+            <button type="submit" class="btn btn-outline-dark btn-sm">Logout</button>
           </form>
         </li>
         <% } else{ %>
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/properties"
-            >Properties</a
-          >
+          <a class="nav-link<%= currentPath.startsWith('/properties') ? ' active' : '' %>" href="/properties">Properties</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/login">Login</a>
+          <a class="nav-link<%= currentPath === '/login' ? ' active' : '' %>" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-primary btn-sm nav-register" href="/login/register">Register</a>
         </li>
         <% } %>
       </ul>

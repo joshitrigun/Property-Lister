@@ -18,22 +18,81 @@
   position: fixed;
   z-index: 2000;
   text-align: center;
-  top: 40%;
+  top: 38%;
   width: 100%;
+  padding: 0 16px;
 }
 
 .index-container h3 {
-  font-size: 45px;
-  font-weight: bold;
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5);
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.index-tagline {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.75), 0 1px 2px rgba(0,0,0,0.6);
+  margin-bottom: 24px;
+}
+
+// Hero quick-search bar
+.hero-search {
+  display: inline-flex;
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  margin-bottom: 20px;
+  max-width: 480px;
+  width: 100%;
+}
+
+.hero-search-input {
+  flex: 1;
+  border: none;
+  padding: 14px 20px;
+  font-size: 0.95rem;
+  outline: none;
+  min-width: 0;
+}
+
+.hero-search-btn {
+  background-color: #1565c0;
+  color: #fff;
+  border: none;
+  padding: 14px 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s;
+
+  &:hover { background-color: #0d47a1; }
 }
 
 .index-container .index-cta {
-  border-radius: 15px;
-  padding: 10px;
-  font-size: 20px;
-  font-weight: bold;
-  background-color: #000;
+  border-radius: 50px;
+  padding: 10px 28px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background-color: rgba(255,255,255,0.18);
   color: #fff;
   display: inline-block;
   text-decoration: none;
+  border: 2px solid rgba(255,255,255,0.7);
+  backdrop-filter: blur(4px);
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: rgba(255,255,255,0.3);
+    text-decoration: none;
+    color: #fff;
+  }
 }

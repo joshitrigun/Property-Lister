@@ -1,25 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Property</title>
+    <title><%= property.name %> - Property Lister</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/main.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-    <!-- Header styles -->
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
-    <!-- Page styles -->
     <link rel="stylesheet" href="/styles/property.css" type="text/css" />
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-      crossorigin="anonymous"
-    />
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
   </head>
@@ -28,64 +20,169 @@
     <header id="header"><%-include('partials/_header') %></header>
 
     <main id="main">
-      <h2 id="property-title card-title"><%= property.name %></h2>
-      <div class="card">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="property-breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/properties">Properties</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><%= property.name %></li>
+        </ol>
+      </nav>
+
+      <!-- Status badges -->
+      <div class="property-detail-badges mb-2">
+        <% if (property.isfeatured) { %>
+        <span class="badge badge-featured badge-lg">Featured</span>
+        <% } %>
+        <% if (!property.isactive) { %>
+        <span class="badge badge-sold badge-lg">Sold</span>
+        <% } else { %>
+        <span class="badge badge-active badge-lg">Active</span>
+        <% } %>
+        <span class="badge badge-type badge-lg"><%= property.property_type %></span>
+      </div>
+
+      <h2 class="property-name"><%= property.name %></h2>
+      <p class="property-location text-muted">
+        <i class="fas fa-map-marker-alt"></i>
+        <% if (property.neighbourhood) { %><%= property.neighbourhood %>, <% } %>
+        <%= property.city %>, <%= property.province %>
+      </p>
+
+      <div class="card property-detail-card">
         <div class="row g-0">
           <div class="col-md-7">
-            <img
-              src="<%= property.image_url %>"
-              class="img-fluid rounded-start"
-              alt="<%= property.name %>"
-            />
+            <!-- Image gallery carousel -->
+            <div id="propertyCarousel" class="carousel slide property-carousel" data-bs-ride="false">
+              <div class="carousel-inner">
+                <!-- Slide 0: primary image_url -->
+                <div class="carousel-item active">
+                  <img src="<%= property.image_url %>" class="d-block w-100 carousel-img" alt="<%= property.name %>" />
+                </div>
+                <!-- Additional slides from property_images -->
+                <% images.forEach(function(url) { %>
+                <div class="carousel-item">
+                  <img src="<%= url %>" class="d-block w-100 carousel-img" alt="<%= property.name %>" />
+                </div>
+                <% }); %>
+              </div>
+              <% if (images.length > 0) { %>
+              <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+              <!-- Thumbnail strip -->
+              <div class="carousel-thumbs">
+                <img src="<%= property.image_url %>" class="carousel-thumb active" data-bs-target="#propertyCarousel" data-bs-slide-to="0" alt="Photo 1" />
+                <% images.forEach(function(url, i) { %>
+                <img src="<%= url %>" class="carousel-thumb" data-bs-target="#propertyCarousel" data-bs-slide-to="<%= i + 1 %>" alt="Photo <%= i + 2 %>" />
+                <% }); %>
+              </div>
+              <% } %>
+            </div>
           </div>
           <div class="col-md-5">
             <div class="card-body">
-              <p class="text-title">Property Description:</p>
+
+              <!-- Key facts grid -->
+              <div class="key-facts">
+                <div class="key-fact">
+                  <span class="key-fact-value"><%= property.number_of_bedrooms %></span>
+                  <span class="key-fact-label"><i class="fas fa-bed"></i> Beds</span>
+                </div>
+                <div class="key-fact">
+                  <span class="key-fact-value"><%= property.number_of_bathrooms %></span>
+                  <span class="key-fact-label"><i class="fas fa-bath"></i> Baths</span>
+                </div>
+                <% if (property.square_feet) { %>
+                <div class="key-fact">
+                  <span class="key-fact-value"><%= property.square_feet.toLocaleString() %></span>
+                  <span class="key-fact-label"><i class="fas fa-ruler-combined"></i> Sq Ft</span>
+                </div>
+                <% } %>
+              </div>
+
+              <hr>
+
+              <p class="text-title"><strong>Description</strong></p>
               <p class="card-text"><%= property.description %></p>
-              <p class="text-title">Property Summary:</p>
-              <p>Bathrooms:<%= property.number_of_bathrooms %></p>
-              <p>Bedrooms:<%= property.number_of_bedrooms %></p>
-              <p>Street: <%= property.street %></p>
-              <p>City: <%= property.city %></p>
-              <p>Postal Code: <%= property.postal_code %></p>
-              <p class="text-title price">Price: $<%= property.cost %></p>
-              <form
-                action="/properties/favourites/<%=property.id%>"
-                method="post"
-              >
+
+              <p class="text-title"><strong>Address</strong></p>
+              <p class="card-text">
+                <%= property.street %>, <%= property.city %>,<br>
+                <%= property.province %> <%= property.postal_code %>
+              </p>
+
+              <p class="property-price">$<%= property.cost.toLocaleString() %></p>
+
+              <% if (user) { %>
+              <form action="/properties/favourites/<%=property.id%>" method="post" class="mb-2">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button type="submit">Add to Favorites</button>
+                <button type="submit" class="btn btn-outline-danger btn-block">
+                  <i class="fas fa-heart"></i> Save to Favourites
+                </button>
               </form>
+              <% } else { %>
+              <a href="/login" class="btn btn-outline-secondary btn-block">Login to Save</a>
+              <% } %>
             </div>
           </div>
         </div>
       </div>
-      <div>
-        <h3>Contact Property Owner</h3>
-        <p class="success-message"></p>
-        <form
-          class="message-form"
-          action="/properties/<%=property.id%>"
-          method="post"
-        >
+
+      <!-- Contact owner -->
+      <% if (user) { %>
+      <div class="contact-owner mt-4">
+        <h3>Contact the Owner</h3>
+        <form class="message-form" action="/properties/<%=property.id%>" method="post">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <textarea
-            class="message-text"
-            name="message"
-            placeholder="Type message here..."
-          ></textarea>
-          <button id="message-submit-btn" class="message-btn" type="submit">
-            Submit
-          </button>
+          <textarea class="form-control message-text" name="message" rows="4"
+            placeholder="Type your message here..." maxlength="2000" required></textarea>
+          <button id="message-submit-btn" class="btn btn-primary mt-2" type="submit">Send Message</button>
         </form>
       </div>
+      <% } %>
+
+      <!-- Similar listings -->
+      <% if (similar && similar.length > 0) { %>
+      <div class="similar-listings mt-5">
+        <h3 class="similar-title">Similar listings in <%= property.city %></h3>
+        <div class="row row-cols-1 row-cols-md-3 g-3">
+          <% similar.forEach(function(p) { %>
+          <div class="col">
+            <a href="/properties/<%= p.id %>" class="card property-card h-100 similar-card">
+              <div class="card-badge-container">
+                <% if (p.isfeatured) { %><span class="badge badge-featured">Featured</span><% } %>
+                <% if (!p.isactive) { %><span class="badge badge-sold">Sold</span><% } %>
+              </div>
+              <img src="<%= p.image_url %>" class="card-img-top" alt="<%= p.name %>" loading="lazy" width="400" height="180" />
+              <div class="card-body">
+                <h5 class="card-title"><%= p.name %></h5>
+                <p class="card-text card-location text-muted">
+                  <% if (p.neighbourhood) { %><%= p.neighbourhood %>, <% } %><%= p.city %>
+                </p>
+                <p class="card-text card-specs text-muted">
+                  <span><i class="fas fa-bed"></i> <%= p.number_of_bedrooms %> bd</span>
+                  <span><i class="fas fa-bath"></i> <%= p.number_of_bathrooms %> ba</span>
+                  <% if (p.square_feet) { %>
+                  <span><i class="fas fa-ruler-combined"></i> <%= p.square_feet.toLocaleString() %> sf</span>
+                  <% } %>
+                </p>
+                <p class="card-text cost">$<%= p.cost.toLocaleString() %></p>
+              </div>
+            </a>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <% } %>
+
     </main>
 
-    <!-- Bootstrap Script -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>
 </html>

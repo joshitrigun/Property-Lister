@@ -1,10 +1,171 @@
 #main {
-  margin-top:  80px;
-}
-#body-page {
-  display: flex;
+  margin-top: 80px;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 16px;
 }
 
-#image-id {
-  size: 20px;
+.property-breadcrumb {
+  margin-top: 12px;
+  font-size: 0.85rem;
+}
+
+.property-detail-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.badge-lg {
+  font-size: 0.8rem;
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge-featured { background: #f5a623; color: #fff; }
+.badge-sold     { background: #b00020; color: #fff; }
+.badge-active   { background: #2e7d32; color: #fff; }
+.badge-type     { background: #1565c0; color: #fff; }
+
+.property-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 8px;
+  line-height: 1.15;
+}
+
+.property-location {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+
+.property-detail-card {
+  margin-bottom: 24px;
+}
+
+.property-detail-img {
+  width: 100%;
+  max-height: 440px;
+  object-fit: cover;
+  border-radius: 6px 0 0 6px;
+}
+
+// ===== Image carousel =====
+.property-carousel {
+  border-radius: 6px 0 0 6px;
+  overflow: hidden;
+  background: #000;
+}
+
+.carousel-img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+}
+
+.carousel-thumbs {
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  background: #111;
+  overflow-x: auto;
+}
+
+.carousel-thumb {
+  width: 72px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 3px;
+  cursor: pointer;
+  opacity: 0.6;
+  border: 2px solid transparent;
+  transition: opacity 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+
+  &:hover { opacity: 1; }
+  &.active { opacity: 1; border-color: #1565c0; }
+}
+
+// ===== Key facts grid =====
+.key-facts {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.key-fact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .key-fact-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  .key-fact-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: #777;
+    letter-spacing: 0.05em;
+  }
+}
+
+.property-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1565c0;
+  margin: 12px 0;
+}
+
+.contact-owner {
+  max-width: 640px;
+
+  h3 { font-size: 1.1rem; margin-bottom: 10px; }
+}
+
+.message-text {
+  width: 100%;
+  resize: vertical;
+}
+
+// ===== Similar listings =====
+.similar-listings {
+  border-top: 1px solid #dee2e6;
+  padding-top: 28px;
+}
+
+.similar-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+
+.similar-card {
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    height: 160px;
+    object-fit: cover;
+  }
 }

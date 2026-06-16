@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home Page</title>
+    <title>Property Lister — Find Your Next Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
@@ -36,8 +36,13 @@
     </div>
     <header id="header"><%-include('partials/_header') %></header>
     <main class="index-container">
-      <h3>Find your dream property!</h3>
-      <a class="index-cta" href="/properties">View All Properties</a>
+      <h3>Find your dream property.</h3>
+      <p class="index-tagline">Browse thousands of homes, condos, and townhouses across Canada.</p>
+      <form class="hero-search" action="/properties" method="GET">
+        <input class="hero-search-input" type="text" name="city" placeholder="Search by city, e.g. Vancouver">
+        <button class="hero-search-btn" type="submit">Search</button>
+      </form>
+      <a class="index-cta" href="/properties">Browse all listings</a>
     </main>
 
     <!-- Bootstrap Script -->

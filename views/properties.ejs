@@ -1,25 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home Page</title>
+    <title>Properties - Property Lister</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/main.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-    <!-- Header styles -->
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
-    <!-- Page styles -->
     <link rel="stylesheet" href="/styles/properties.css" type="text/css" />
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-      crossorigin="anonymous"
-    />
-    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
@@ -28,46 +19,254 @@
   <body>
     <header id="header"><%-include('partials/_header') %></header>
     <main id="main">
-      <h3 class='text-center'>Properties</h3>
-      <a  data-bs-toggle="collapse" href="#filter" role="button" aria-expanded="false">
-        <p class="filter">Filter</p>
-      </a>
-      <div class="collapse" id="filter">
-        <form action="/properties" method="GET">
-          <div class="mb-3">
-            <label for="Price" class="form-label">Min Price:</label>
-            <input type="number" class="form-control" name="price">
+
+      <!-- ===== FILTER BAR ===== -->
+      <form class="filter-bar" action="/properties" method="GET">
+        <div class="filter-row">
+
+          <div class="filter-group">
+            <label for="f-min-price">Min Price ($)</label>
+            <input type="number" id="f-min-price" name="min_price" class="form-control form-control-sm"
+              placeholder="0" min="0" value="<%= query.min_price || '' %>">
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+
+          <div class="filter-group">
+            <label for="f-max-price">Max Price ($)</label>
+            <input type="number" id="f-max-price" name="max_price" class="form-control form-control-sm"
+              placeholder="Any" min="0" value="<%= query.max_price || '' %>">
+          </div>
+
+          <div class="filter-group">
+            <label for="f-beds">Min Beds</label>
+            <select id="f-beds" name="min_beds" class="form-control form-control-sm">
+              <option value="">Any</option>
+              <% [1,2,3,4,5].forEach(function(n){ %>
+              <option value="<%= n %>" <%= (query.min_beds == n) ? 'selected' : '' %>><%= n %>+</option>
+              <% }); %>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="f-baths">Min Baths</label>
+            <select id="f-baths" name="min_baths" class="form-control form-control-sm">
+              <option value="">Any</option>
+              <% [1,2,3,4].forEach(function(n){ %>
+              <option value="<%= n %>" <%= (query.min_baths == n) ? 'selected' : '' %>><%= n %>+</option>
+              <% }); %>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="f-type">Type</label>
+            <select id="f-type" name="property_type" class="form-control form-control-sm">
+              <option value="">All types</option>
+              <% validPropertyTypes.forEach(function(t){ %>
+              <option value="<%= t %>" <%= (query.property_type === t) ? 'selected' : '' %>><%= t %></option>
+              <% }); %>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="f-city">City</label>
+            <input type="text" id="f-city" name="city" class="form-control form-control-sm"
+              placeholder="Any city" value="<%= query.city || '' %>">
+          </div>
+
+          <div class="filter-group">
+            <label for="f-neighbourhood">Neighbourhood</label>
+            <input type="text" id="f-neighbourhood" name="neighbourhood" class="form-control form-control-sm"
+              placeholder="Any" value="<%= query.neighbourhood || '' %>">
+          </div>
+
+          <div class="filter-group">
+            <label for="f-sort">Sort</label>
+            <select id="f-sort" name="sort" class="form-control form-control-sm">
+              <option value="newest" <%= (!query.sort || query.sort === 'newest') ? 'selected' : '' %>>Newest</option>
+              <option value="featured" <%= (query.sort === 'featured') ? 'selected' : '' %>>Featured first</option>
+              <option value="price_asc" <%= (query.sort === 'price_asc') ? 'selected' : '' %>>Price: Low → High</option>
+              <option value="price_desc" <%= (query.sort === 'price_desc') ? 'selected' : '' %>>Price: High → Low</option>
+            </select>
+          </div>
+
+          <div class="filter-group filter-actions">
+            <label>&nbsp;</label>
+            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+            <a href="/properties" class="btn btn-outline-secondary btn-sm">Clear</a>
+          </div>
+        </div>
+      </form>
+
+      <!-- ===== MARKET STATS BAR ===== -->
+      <div class="stats-bar">
+        <div class="stats-left">
+          <span class="stats-count">
+            <strong><%= totalCount %></strong> <%= totalCount === 1 ? 'property' : 'properties' %> found
+          </span>
+          <% if (totalCount > 0 && marketStats.medianPrice) { %>
+          <span class="stats-pill">
+            <i class="fas fa-tag"></i> Median <strong>$<%= marketStats.medianPrice.toLocaleString() %></strong>
+          </span>
+          <% } %>
+          <% if (totalCount > 0 && marketStats.avgPricePerSqft) { %>
+          <span class="stats-pill">
+            <i class="fas fa-ruler-combined"></i> Avg <strong>$<%= marketStats.avgPricePerSqft.toLocaleString() %>/sqft</strong>
+          </span>
+          <% } %>
+          <% if (totalCount > 0 && marketStats.typeCounts.length > 1) { %>
+          <span class="stats-pill stats-types">
+            <% marketStats.typeCounts.forEach(function(tc, i) { %>
+              <%= tc.cnt %> <%= tc.property_type %><% if (i < marketStats.typeCounts.length - 1) { %> &middot; <% } %>
+            <% }); %>
+          </span>
+          <% } %>
+        </div>
+        <div class="stats-actions">
+          <% if (totalPages > 1) { %>
+          <span class="stats-pages">Page <%= page %> of <%= totalPages %></span>
+          <% } %>
+          <% if (user && currentQueryString) { %>
+          <button class="btn btn-outline-primary btn-sm" type="button"
+            data-bs-toggle="collapse" data-bs-target="#save-search-panel" aria-expanded="false">
+            <i class="fas fa-bookmark"></i> Save search
+          </button>
+          <% } %>
+          <% if (mapPins.length > 0) { %>
+          <button id="map-toggle" class="btn btn-outline-secondary btn-sm" type="button">
+            <i class="fas fa-map"></i> <span id="map-toggle-label">Show map</span>
+          </button>
+          <% } %>
+        </div>
       </div>
+
+      <!-- Save search collapse panel -->
+      <% if (user && currentQueryString) { %>
+      <div class="collapse" id="save-search-panel">
+        <div class="save-search-form">
+          <form action="/saved-searches" method="POST" class="d-flex align-items-center gap-2 flex-wrap">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" name="query_params" value="<%= currentQueryString %>">
+            <label class="save-search-label">Name this search:</label>
+            <input type="text" name="name" class="form-control form-control-sm save-search-input"
+              placeholder="e.g. Vancouver 3BR Condos" required maxlength="100">
+            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+          </form>
+        </div>
+      </div>
+      <% } %>
+
+      <!-- ===== MAP PANEL ===== -->
+      <% if (mapPins.length > 0) { %>
+      <div id="map-panel" style="display:none;">
+        <div id="property-map"></div>
+      </div>
+      <% } %>
+
+      <!-- ===== PROPERTY GRID ===== -->
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        <% for(const property in properties) { %>
+        <% for (const property of properties) { %>
         <div class="col">
-          <a href="/properties/<%= properties[property].id %>" class="card property-card h-100">
-            <img src="<%= properties[property].image_url %>" class="card-img-top" alt="<%= properties[property].name %>" loading="lazy" width="400" height="260" />
+          <a href="/properties/<%= property.id %>" class="card property-card h-100">
+
+            <!-- Status badges -->
+            <div class="card-badge-container">
+              <% if (property.isfeatured) { %>
+              <span class="badge badge-featured">Featured</span>
+              <% } %>
+              <% if (!property.isactive) { %>
+              <span class="badge badge-sold">Sold</span>
+              <% } %>
+            </div>
+
+            <img src="<%= property.image_url %>" class="card-img-top" alt="<%= property.name %>" loading="lazy" width="400" height="220" />
             <div class="card-body">
-              <h5 class="card-title"><%= properties[property].name %></h5>
-              <p class="card-text"><%= properties[property].description %></p>
-              <p class="card-text text-muted">Bed: <%= properties[property].number_of_bedrooms %> <span>Bath: <%= properties[property].number_of_bathrooms %></span></p>
-              <div class="card-text d-flex justify-content-between">
-                <span class="cost">$<%= properties[property].cost %></span>
-                <% if (properties[property].isfeatured) { %>
-                  <i class="fas fa-star" aria-label="Featured property"></i>
+              <h5 class="card-title"><%= property.name %></h5>
+              <p class="card-text card-location text-muted">
+                <% if (property.neighbourhood) { %><%= property.neighbourhood %>, <% } %><%= property.city %>
+              </p>
+              <p class="card-text card-specs text-muted">
+                <span><i class="fas fa-bed"></i> <%= property.number_of_bedrooms %> bd</span>
+                <span><i class="fas fa-bath"></i> <%= property.number_of_bathrooms %> ba</span>
+                <% if (property.square_feet) { %>
+                <span><i class="fas fa-ruler-combined"></i> <%= property.square_feet.toLocaleString() %> sf</span>
                 <% } %>
-              </div>
+                <span class="property-type-pill"><%= property.property_type %></span>
+              </p>
+              <p class="card-text cost">$<%= property.cost.toLocaleString() %></p>
             </div>
           </a>
-        </div> 
+        </div>
+        <% } %>
+
+        <% if (properties.length === 0) { %>
+        <div class="col-12">
+          <p class="no-results text-center text-muted mt-4">No properties match your search. <a href="/properties">Clear filters</a></p>
+        </div>
         <% } %>
       </div>
+
+      <!-- ===== PAGINATION ===== -->
+      <% if (totalPages > 1) { %>
+      <nav class="pagination-nav" aria-label="Property pages">
+        <ul class="pagination justify-content-center">
+          <% if (page > 1) { %>
+          <li class="page-item">
+            <a class="page-link" href="?<%- Object.entries(query).filter(([k]) => k !== 'page').map(([k,v]) => k + '=' + encodeURIComponent(v)).join('&') %>&page=<%= page - 1 %>">&#8249; Prev</a>
+          </li>
+          <% } %>
+
+          <% for (let p = Math.max(1, page - 2); p <= Math.min(totalPages, page + 2); p++) { %>
+          <li class="page-item <%= p === page ? 'active' : '' %>">
+            <a class="page-link" href="?<%- Object.entries(query).filter(([k]) => k !== 'page').map(([k,v]) => k + '=' + encodeURIComponent(v)).join('&') %>&page=<%= p %>"><%= p %></a>
+          </li>
+          <% } %>
+
+          <% if (page < totalPages) { %>
+          <li class="page-item">
+            <a class="page-link" href="?<%- Object.entries(query).filter(([k]) => k !== 'page').map(([k,v]) => k + '=' + encodeURIComponent(v)).join('&') %>&page=<%= page + 1 %>">Next &#8250;</a>
+          </li>
+          <% } %>
+        </ul>
+      </nav>
+      <% } %>
+
     </main>
 
-    <!-- Bootstrap Script -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WLcE=" crossorigin=""></script>
+    <script>
+    (function () {
+      var pins = <%- JSON.stringify(mapPins) %>;
+      var mapInitialized = false;
+      var map;
+
+      document.getElementById('map-toggle') && document.getElementById('map-toggle').addEventListener('click', function () {
+        var panel = document.getElementById('map-panel');
+        var label = document.getElementById('map-toggle-label');
+        var visible = panel.style.display !== 'none';
+        panel.style.display = visible ? 'none' : 'block';
+        label.textContent = visible ? 'Show map' : 'Hide map';
+
+        if (!visible && !mapInitialized) {
+          mapInitialized = true;
+          map = L.map('property-map');
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            maxZoom: 18
+          }).addTo(map);
+
+          var bounds = [];
+          pins.forEach(function (p) {
+            var marker = L.marker([p.lat, p.lng]).addTo(map);
+            marker.bindPopup(
+              '<a href="/properties/' + p.id + '"><strong>' + p.name + '</strong></a>' +
+              '<br>$' + p.cost.toLocaleString()
+            );
+            bounds.push([p.lat, p.lng]);
+          });
+          if (bounds.length) map.fitBounds(bounds, { padding: [40, 40] });
+        }
+      });
+    }());
+    </script>
   </body>
 </html>

@@ -28,7 +28,11 @@
 }
 
 #main .card .card-title {
-  font-weight: bold;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-text);
 }
 
 #main .card .cost {
@@ -45,6 +49,184 @@
 
 #main .fa-star {
   color: red;
+}
+
+// ===== Filter bar =====
+.filter-bar {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 110px;
+
+  label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+}
+
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+// ===== Stats bar =====
+.stats-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.stats-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.stats-pill {
+  background: #f0f4ff;
+  border: 1px solid #c7d7f5;
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 0.8rem;
+  color: #1565c0;
+  white-space: nowrap;
+}
+
+.stats-types {
+  color: #444;
+  background: #f5f5f5;
+  border-color: #ddd;
+}
+
+.stats-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+// ===== Save search panel =====
+.save-search-form {
+  background: #f0f4ff;
+  border: 1px solid #c7d7f5;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+}
+
+.save-search-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  margin-right: 4px;
+}
+
+.save-search-input {
+  max-width: 260px;
+}
+
+// ===== Map panel =====
+#map-panel {
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #dee2e6;
+}
+
+#property-map {
+  height: 380px;
+  width: 100%;
+}
+
+// ===== Listing card badges =====
+.card-badge-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 5px;
+  z-index: 1;
+}
+
+.badge {
+  font-size: 0.72rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge-featured { background: #f5a623; color: #fff; }
+.badge-sold     { background: #b00020; color: #fff; }
+.badge-active   { background: #2e7d32; color: #fff; }
+.badge-type     { background: #1565c0; color: #fff; }
+
+// ===== Card meta =====
+.card-location {
+  font-size: 0.82rem;
+  margin-bottom: 4px;
+}
+
+.card-specs {
+  font-size: 0.82rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.property-type-pill {
+  background: #e3eeff;
+  color: #1565c0;
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.cost {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #1a1a1a;
+}
+
+// ===== Pagination =====
+.pagination-nav {
+  margin-top: 32px;
+  margin-bottom: 24px;
+}
+
+// ===== No results =====
+.no-results {
+  font-size: 1rem;
+  padding: 32px 0;
 }
 
 #main .property-actions {
